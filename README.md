@@ -1,2 +1,2 @@
-# Frustrated Engineer
- This is the official website of frustrated engineer
+# Frustrated Engineers
+ The Official Website of Frustrated Engineers Community
