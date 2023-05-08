@@ -70,3 +70,276 @@ svg#freepik_stories-programmer.animatedprogrammer #freepik--Device--inject-46 {
         transform: rotate(-1deg);
     }
 }
+
+/* Here Comes Quiz CSS */
+
+svg#freepik_stories-choose:not(.animatedquiz) .animable {
+    opacity: 0;
+}
+
+svg#freepik_stories-choose.animatedquiz #freepik--Options--inject-9--inject-11 {
+    animation: 1.5s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-choose.animatedquiz #freepik--Character--inject-9--inject-11 {
+    animation: 1.5s Infinite linear wind;
+    animation-delay: 0s;
+}
+
+@keyframes floating {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes wind {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(1deg);
+    }
+
+    75% {
+        transform: rotate(-1deg);
+    }
+}
+
+/* Here Comes Career Guidence Animation */
+
+svg#freepik_stories-in-progress:not(.animatedcareerguidence) .animable {
+    opacity: 0;
+}
+
+svg#freepik_stories-in-progress.animatedcareerguidence #freepik--background-complete--inject-83 {
+    animation: 1.5s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-in-progress.animatedcareerguidence #freepik--Character--inject-83 {
+    animation: 1.5s Infinite linear shake;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-in-progress.animatedcareerguidence #freepik--Flag--inject-83 {
+    animation: 1.5s Infinite linear wind;
+    animation-delay: 0s;
+}
+
+@keyframes floating {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes wind {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(1deg);
+    }
+
+    75% {
+        transform: rotate(-1deg);
+    }
+}
+
+/* Animation of meetups begins here */
+
+svg#freepik_stories-remote-meeting:not(.animatedmeetups) .animable {
+    opacity: 0;
+}
+
+svg#freepik_stories-remote-meeting.animatedmeetups #freepik--background-complete--inject-120 {
+    animation: 3s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-remote-meeting.animatedmeetups #freepik--trash-bin--inject-120 {
+    animation: 1.5s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-remote-meeting.animatedmeetups #freepik--Window--inject-120 {
+    animation: 1.5s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-remote-meeting.animatedmeetups #freepik--Character--inject-120 {
+    animation: 1.5s Infinite linear wind;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-remote-meeting.animatedmeetups #freepik--Table--inject-120 {
+    animation: 3s Infinite linear wind;
+    animation-delay: 0.5s;
+}
+
+@keyframes floating {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes wind {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(1deg);
+    }
+
+    75% {
+        transform: rotate(-1deg);
+    }
+}
+
+/* Animation of reward based study starts here */
+
+svg#freepik_stories-success-factors:not(.animatedstudy) .animable {
+    opacity: 0;
+}
+
+svg#freepik_stories-success-factors.animatedstudy #freepik--Plant--inject-10 {
+    animation: 1.5s Infinite linear wind;
+    animation-delay: 0.5s;
+}
+
+svg#freepik_stories-success-factors.animatedstudy #freepik--Trophy--inject-10 {
+    animation: 1.5s Infinite linear heartbeat;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-success-factors.animatedstudy #freepik--Factors--inject-10 {
+    animation: 1.5s Infinite linear wind;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-success-factors.animatedstudy #freepik--Character--inject-10 {
+    animation: 1.5s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-success-factors.animatedstudy #freepik--Clouds--inject-10 {
+    animation: 1.5s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+@keyframes wind {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(1deg);
+    }
+
+    75% {
+        transform: rotate(-1deg);
+    }
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(1.1);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes floating {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

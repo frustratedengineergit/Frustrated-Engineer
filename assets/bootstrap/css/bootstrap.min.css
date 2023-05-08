@@ -12782,7 +12782,7 @@ body {
 
 .clean-card .icons a {
     font-size: 16px;
-    color: #3b99e0;
+    color: #FD460B;
     opacity: .75;
     height: 2em;
     line-height: 2;
@@ -12850,7 +12850,7 @@ body {
 }
 
 .clean-block.clean-form form {
-    border-top: 2px solid #5ea4f3;
+    border-top: 2px solid #FD460B;
     background-color: #fff;
     max-width: 500px;
     margin: auto;
