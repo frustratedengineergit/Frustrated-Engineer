@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" id="navbar">
         <div class="container"><a class="navbar-brand logo" href="#"><img src="assets/img/logo.png"
                     style="height: 2em;"></a><button data-bs-toggle="collapse" class="navbar-toggler"
                 data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span
@@ -41,29 +41,16 @@
             </div>
         </div>
     </nav>
-    <main class="page landing-page">
-        <!-- main Atropos container (required), add your custom class here -->
-<div class="atropos my-atropos">
-    <!-- scale container (required) -->
-    <div class="atropos-scale">
-      <!-- rotate container (required) -->
-      <div class="atropos-rotate">
-        <!-- inner container (required) -->
-        <div class="atropos-inner">
-          <!-- put your custom content here -->
-          <section class="clean-block clean-hero"
+    <main class="page landing-page bounce">
+        <section class="clean-block clean-hero"
             style="background-image:url(&quot;assets/img/tech/image4.jpg&quot;);color:#fd470b8a;">
             <div class="text">
                 <h1>FRUSTRATED ENGINEER</h1>
                 <p>Welcome to FRUSTRATED ENGINEER, a vibrant tech community created by engineers, for engineers.</p>
-                <button class="btn btn-outline-light btn-lg" type="button"
+                <button class="btn btn-outline-light btn-lg jello-h" type="button"
                     onclick="window.location.href='#infosec'">Learn More</button>
             </div>
         </section>
-        </div>
-      </div>
-    </div>
-  </div>
         <section class=" clean-block clean-info dark" id="infosec">
             <div class="container">
                 <div class="block-heading">
@@ -863,29 +850,42 @@
             </div>
         </section>
         <section class="clean-block slider dark">
-            <div class="container">
-                <div class="carousel slide" data-bs-ride="carousel" id="carousel-1">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active"><img class="w-100 d-block" src="assets/img/Events/image1.jpg"
-                                alt="Slide Image"></div>
-                        <div class="carousel-item"><img class="w-100 d-block" src="assets/img/Events/image2.jpg"
-                                alt="Slide Image"></div>
-                        <div class="carousel-item"><img class="w-100 d-block" src="assets/img/Events/image3.jpg"
-                                alt="Slide Image"></div>
+            <!-- main Atropos container (required), add your custom class here -->
+        <div class="atropos my-atropos">
+            <!-- scale container (required) -->
+            <div class="atropos-scale">
+                <!-- rotate container (required) -->
+                <div class="atropos-rotate">
+                    <!-- inner container (required) -->
+                    <div class="atropos-inner">
+                        <!-- put your custom content here -->
+                        <div class="container">
+                            <div class="carousel slide" data-bs-ride="carousel" id="carousel-1">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active"><img class="w-100 d-block" src="assets/img/Events/image1.jpg"
+                                            alt="Slide Image"></div>
+                                    <div class="carousel-item"><img class="w-100 d-block" src="assets/img/Events/image2.jpg"
+                                            alt="Slide Image"></div>
+                                    <div class="carousel-item"><img class="w-100 d-block" src="assets/img/Events/image3.jpg"
+                                            alt="Slide Image"></div>
+                                </div>
+                                <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span
+                                            class="carousel-control-prev-icon"></span><span
+                                            class="visually-hidden">Previous</span></a><a class="carousel-control-next"
+                                        href="#carousel-1" role="button" data-bs-slide="next"><span
+                                            class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a>
+                                </div>
+                                <ol class="carousel-indicators">
+                                    <li data-bs-target="#carousel-1" data-bs-slide-to="0" class="active"></li>
+                                    <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
+                                    <li data-bs-target="#carousel-1" data-bs-slide-to="2"></li>
+                                </ol>
+                            </div>
+                        </div>
                     </div>
-                    <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span
-                                class="carousel-control-prev-icon"></span><span
-                                class="visually-hidden">Previous</span></a><a class="carousel-control-next"
-                            href="#carousel-1" role="button" data-bs-slide="next"><span
-                                class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a>
-                    </div>
-                    <ol class="carousel-indicators">
-                        <li data-bs-target="#carousel-1" data-bs-slide-to="0" class="active"></li>
-                        <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
-                        <li data-bs-target="#carousel-1" data-bs-slide-to="2"></li>
-                    </ol>
                 </div>
             </div>
+        </div>
         </section>
         <section class="clean-block features">
             <div class="container">
@@ -967,10 +967,11 @@
     <script src="https://cdn.jsdelivr.net/npm/atropos@1.0.2/atropos.min.js"></script>
     <script>
         const myAtropos = Atropos({
-          el: '.my-atropos',
-          // rest of parameters
+            el: '.my-atropos',
+            // rest of parameters
         });
-      </script>
+    </script>
 </body>
 <!-- Body Ends Here -->
+
 </html>
