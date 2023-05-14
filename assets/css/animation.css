@@ -969,15 +969,15 @@ svg#freepik_stories-rocket.animatedrocketman #freepik--Character--inject-76 {
     .animatedufo {
         width: 38vh;
     }
-}
-@media(max-width: 420px) {
-    .animatedufo {
-        width: 32vh;
-    }
     .houses{
         zoom: 50%;
     }
     #freepik_stories-cool-robot {
         zoom: 70%;
+    }
+}
+@media(max-width: 420px) {
+    .animatedufo {
+        width: 32vh;
     }
 }
