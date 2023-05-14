@@ -943,7 +943,9 @@ svg#freepik_stories-rocket.animatedrocketman #freepik--Character--inject-76 {
     left: 50%;
     transform: translate(-50%,0);
 }
-
+.text-main{
+    font-size: 10vh;
+}
 @media(max-width: 1200px) {
     .animatedastronaut {
         display: none;
@@ -958,6 +960,9 @@ svg#freepik_stories-rocket.animatedrocketman #freepik--Character--inject-76 {
     .animatedufo {
         width: 50vh;
     }
+    .text-main{
+        font-size: 200%;
+    }
 }
 
 @media(max-width: 800px) {
@@ -968,5 +973,11 @@ svg#freepik_stories-rocket.animatedrocketman #freepik--Character--inject-76 {
 @media(max-width: 420px) {
     .animatedufo {
         width: 32vh;
+    }
+    .houses{
+        zoom: 50%;
+    }
+    #freepik_stories-cool-robot {
+        zoom: 70%;
     }
 }
