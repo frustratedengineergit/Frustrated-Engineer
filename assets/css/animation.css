@@ -946,6 +946,11 @@ svg#freepik_stories-rocket.animatedrocketman #freepik--Character--inject-76 {
 .text-main{
     font-size: 10vh;
 }
+#particles-js{
+    position:absolute;
+    width: 100%;
+    height: 440vh;
+}
 @media(max-width: 1200px) {
     .animatedastronaut {
         display: none;
@@ -974,6 +979,9 @@ svg#freepik_stories-rocket.animatedrocketman #freepik--Character--inject-76 {
     }
     #freepik_stories-cool-robot {
         zoom: 70%;
+    }
+    #particles-js{
+        height: 340vh;
     }
 }
 @media(max-width: 420px) {
