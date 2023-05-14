@@ -955,10 +955,18 @@ svg#freepik_stories-rocket.animatedrocketman #freepik--Character--inject-76 {
     .dark-top-block{
         height:20vh;
     }
+    .animatedufo {
+        width: 50vh;
+    }
 }
 
 @media(max-width: 800px) {
     .animatedufo {
-        width: 40vh;
+        width: 38vh;
+    }
+}
+@media(max-width: 420px) {
+    .animatedufo {
+        width: 32vh;
     }
 }
