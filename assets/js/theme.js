@@ -14,24 +14,23 @@ window.onscroll = function () {
   scrollFunction();
 };
 
-function scrollFunction() {
-  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 10) {
+function scrollFunction() 
+{
+  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 10) 
+  {
     document.getElementById("navbar").style.padding = "1.2rem 1rem";
     document.getElementById("navbar").style.color = "white !important";
     document.getElementById("navbar").classList.add("bg-nav", "navbar-dark");
-    document
-      .getElementById("navbar")
-      .classList.remove("bg-transparent", "navbar-light");
-    document.getElementById("navbar").style.boxShadow =
-      "0px 0px 15px rgba(255, 255, 255, .1)";
+    document.getElementById("navbar").classList.remove("bg-transparent", "navbar-light");
+    document.getElementById("navbar").style.boxShadow ="0px 0px 15px rgba(255, 255, 255, .1)";
     document.getElementById("navbar").style.fontFamily = null;
-  } else {
+  } 
+  else 
+  {
     document.getElementById("navbar").style.fontFamily = "Chalkduster";
     document.getElementById("navbar").style.color = "black";
     document.getElementById("navbar").style.removeProperty("box-shadow");
-    document
-      .getElementById("navbar")
-      .classList.add("bg-transparent", "navbar-light");
+    document.getElementById("navbar").classList.add("bg-transparent", "navbar-light");
     document.getElementById("navbar").classList.remove("bg-nav", "navbar-dark");
   }
 }
