@@ -17,6 +17,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="assets/img/favicon_io/site.webmanifest">
+    <link rel="stylesheet" href="assets/css/animation.css">
 </head>
 
 <body>
@@ -40,23 +41,58 @@
         </div>
     </nav>
     <main class="page contact-us-page">
-        <section class="clean-block clean-form dark">
+        <section style="margin-top: 80px;" class="clean-block clean-form bg-decided1 text-white">
             <div class="container">
                 <div class="block-heading">
-                    <h2 class="text-info">Contact Us</h2>
+                    <h2 class="text-theme-light">Contact Us</h2>
                     <p>Got a query? We're just a click away - contact us now!</p>
                 </div>
-                <form>
-                    <div class="mb-3"><label class="form-label" for="name">Name</label><input class="form-control"
-                            type="text" id="name" name="name"></div>
-                    <div class="mb-3"><label class="form-label" for="subject">Subject</label><input class="form-control"
-                            type="text" id="subject" name="subject"></div>
-                    <div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control"
-                            type="email" id="email" name="email"></div>
-                    <div class="mb-3"><label class="form-label" for="message">Message</label><textarea
-                            class="form-control" id="message" name="message"></textarea></div>
-                    <div class="mb-3"><button class="btn btn-primary" type="submit">Send</button></div>
-                </form>
+                <div class="formbody">
+                    <div class="containerform">
+                      <div class="screen">
+                        <div class="screen-header">
+                          <div class="screen-header-left">
+                            <div class="screen-header-button close"></div>
+                            <div class="screen-header-button maximize"></div>
+                            <div class="screen-header-button minimize"></div>
+                          </div>
+                          <div class="screen-header-right">
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                          </div>
+                        </div>
+                        <div class="screen-body">
+                          <div class="screen-body-item left">
+                            <div class="app-title">
+                              <span>MESSEGE</span>
+                              <span>US ; )</span>
+                            </div>
+                            <div class="app-contact">CONTACT INFO : +91 7248432377</div>
+                          </div>
+                          <div class="screen-body-item">
+                            <div class="app-form">
+                              <div class="app-form-group">
+                                <input class="app-form-control" placeholder="NAME" value="Aniket Raj Singh">
+                              </div>
+                              <div class="app-form-group">
+                                <input class="app-form-control" placeholder="EMAIL">
+                              </div>
+                              <div class="app-form-group">
+                                <input class="app-form-control" placeholder="CONTACT NO">
+                              </div>
+                              <div class="app-form-group message">
+                                <input class="app-form-control" placeholder="MESSAGE">
+                              </div>
+                              <div class="app-form-group buttons">
+                                <button class="app-form-button">CLEAR</button>
+                                <button class="app-form-button">SEND</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
             </div>
         </section>
     </main>
