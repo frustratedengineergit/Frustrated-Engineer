@@ -116,6 +116,87 @@ svg#freepik_stories-choose.animatedquiz #freepik--Character--inject-9--inject-11
         transform: rotate(-1deg);
     }
 }
+/* Cards */
+  
+  .containercard {
+    position : relative;
+    display : flex;
+    width:fit-content;
+    align-items : center;
+    justify-content : center;
+    padding : 30px;  
+  }
+  
+  .containercard .card {
+    position: relative;
+    max-width : 300px;
+    height : 300px;  
+    background-color : #200e49;
+    margin : 30px 10px;
+    padding : 20px 15px; 
+    display : flex;
+    flex-direction : column;
+    border: #D730E9 dashed 3px;
+    transition : 0.3s ease-in-out;
+    border-radius : 50%;
+  }
+  .containercard .card:hover {
+    height : 320px;    
+  }
+  
+  
+  .containercard .card .cardimage {
+    position : relative;
+    width : 280px;
+    height : 280px;
+    border: #D730E9 solid 3px;
+    border-radius: 50% ;
+    top : -40%;
+    left: 8px;
+    box-shadow : 0 5px 20px rgba(0,0,0,0.2);
+    z-index : 1;
+  }
+  
+  .containercard .card .cardimage img {
+    width : 100%;
+    height: 274px;
+    object-fit: cover;
+    border-radius : 50%;
+  }
+  
+  .containercard .card .contentcard {
+    position : relative;
+    top : -140px;
+    padding : 10px 15px;
+    color : #FFF;
+    text-align : center;
+    visibility : hidden;
+    opacity : 0;
+    transition : 0.3s ease-in-out;
+      
+  }
+  .containercard .icons a {
+    font-size: 16px;
+    color: #D730E9;
+    opacity: .75;
+    height: 2em;
+    line-height: 2;
+    text-align: center;
+    padding: .6em .4em;
+    text-decoration: none
+}
+
+.containercard .icons a:hover {
+    opacity: 1
+}
+  
+  .containercard .card:hover .contentcard {
+     margin-top : 25px;
+     visibility : visible;
+     opacity : 1;
+     transition-delay: 0.2s;
+    
+  }
 /* Form stats here */
 .formbody {
     display: flex;
