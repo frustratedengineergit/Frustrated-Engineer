@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Gallery - Frustrated Engineers{% endblock title %}
+{% load static %}
+{% block body %}
+<main class="page gallery-page">
+    <section style="margin-top: 80px;" class="clean-block clean-gallery bg-decided1 text-white">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-theme-light">Gallery</h2>
+                <p>Browse our moments gallery and see why Frustrated Engineers is the place to be for tech enthusiasts.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image1.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image1.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image2.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image2.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image3.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image3.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image1.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image1.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image2.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image2.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image3.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image3.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image1.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image1.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image2.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image2.jpg' %}">
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <a class="lightbox" href="{% static 'img/Events/image3.jpg' %}">
+                        <img class="img-thumbnail img-fluid image" src="{% static 'img/Events/image3.jpg' %}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+   {% endblock body %}

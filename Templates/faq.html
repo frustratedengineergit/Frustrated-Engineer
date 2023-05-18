@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}FAQ - Frustrated Engineers{% endblock title %}
+{% load static %}   
+{% block body %}
+    <main class="page faq-page">
+        <section class="clean-block clean-faq bg-decided1" style="margin-top: 80px;">
+            <div class="container">
+                <div class="block-heading text-white">
+                    <h2 class="text-theme-light">Frequently Asked Questions</h2>
+                    <p>Get the facts and clear up any doubts with our helpful FAQ section.</p>
+                </div>
+                <div class="container-fluid">
+                    <!-- The faq section starts here -->
+                    <!-- Q/A  -->
+                    <button type="button" class="collapsible">What is Frustrated Engineers?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">How can I join the Frustrated Engineers
+                        community?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">What kind of content and activities can I expect to find
+                        on Frustrated Engineers?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">Is there a membership fee for joining Frustrated
+                        Engineers?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">Can I participate in Frustrated Engineers if I'm just
+                        starting out in my tech career?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">How can I connect with other members of the Frustrated
+                        Engineers community?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">What kind of career guidance resources does Frustrated
+                        Engineers offer?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">How does the reward-based study program work?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">When and where are the monthly meet-ups held?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                    <button type="button" class="collapsible">How can I contribute to the Frustrated Engineers community
+                        and share my knowledge and expertise with others?</button>
+                    <div class="content1">
+                        <p>This is the Answer</p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock body%}
+{% block javascript %}
+<script>
+    // FAQ SECTION STARTS HERE
+
+    var acc = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            /* Toggle between adding and removing the "active" class, to highlight the button that controls the content1 */
+            this.classList.toggle("active1");
+
+            /* Toggle between hiding and showing the active content1 */
+            var content1 = this.nextElementSibling;
+            if (content1.style.display === "block") {
+                content1.style.display = "none";
+            } else {
+                content1.style.display = "block";
+            }
+        });
+    }
+</script>
+
+{% endblock javascript %}
+    
