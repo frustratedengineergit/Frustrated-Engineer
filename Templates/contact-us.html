@@ -9,7 +9,7 @@
         <h2 class="text-theme-light">Contact Us</h2>
         <p>Got a query? We're just a click away - contact us now!</p>
       </div>
-      <form method="post" action="{% url 'submit' %}">
+      <form method="post" action="{% url 'my_view' %}">
         {% csrf_token %}
         <div class="formbody">
           <div class="containerform">

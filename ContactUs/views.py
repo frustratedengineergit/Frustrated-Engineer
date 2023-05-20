@@ -11,8 +11,9 @@ def index(request):
 class ContactForm(forms.Form):
     name = forms.CharField(label='Name', max_length=100)
     email = forms.EmailField(label='Email')
-    contact = forms.IntegerField(label='Contact')
+    contact = forms.IntegerField(label='Contact', widget=forms.NumberInput(attrs={'step': '1', 'min': '0'}))
     message = forms.CharField(label='Message', widget=forms.Textarea)
+
 
 def submit(request):
     return render(request, 'index.html')
@@ -35,6 +36,6 @@ def my_view(request):
     else:
         form = ContactForm()
     
-    return render(request, 'my_template.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
 
 
