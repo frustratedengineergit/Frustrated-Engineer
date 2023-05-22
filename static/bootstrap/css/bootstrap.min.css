@@ -13867,6 +13867,10 @@ body {
 }
 
 @media(min-width: 992px) {
+    .bg-transparent {
+        --bs-bg-opacity: 1;
+        background-color: white !important
+    }
     .clean-card {
         margin-bottom: 0px
     }

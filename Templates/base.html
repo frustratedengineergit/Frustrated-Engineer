@@ -22,19 +22,19 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top clean-navbar" id="navbar"
         style="font-family:Chalkduster;">
-        <div class="container"><a class="navbar-brand logo" href="#">
+        <div class="container"><a class="navbar-brand logo" href="/">
                 <h3>Frustrated Engineer</h3>
             </a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span
                     class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Features">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Gallery">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/FAQ">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link {% if active_directory == 'Home' %}active{% endif %}" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {% if active_directory == 'Features' %}active{% endif %}" href="/Features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link {% if active_directory == 'Gallery' %}active{% endif %}" href="/Gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link {% if active_directory == 'FAQ' %}active{% endif %}" href="/FAQ">FAQ</a></li>
                     <!-- <li class="nav-item"><a class="nav-link" href="blog-post-list.html">Blog</a></li> -->
-                    <li class="nav-item"><a class="nav-link" href="/AboutUs">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/ContactUs">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link {% if active_directory == 'About Us' %}active{% endif %}" href="/AboutUs">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link {% if active_directory == 'Contact Us' %}active{% endif %}" href="/ContactUs">Contact Us</a></li>
                 </ul>
             </div>
         </div>
