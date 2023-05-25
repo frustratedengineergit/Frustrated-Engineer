@@ -83,10 +83,12 @@ def signup(request):
             to_email = email
 
             # Load the email template
-            html_content = render_to_string('email_templates/Signup_Email.html')
+            context = {'fname': name}
+            html_content = render_to_string('email_templates/Signup_Email.html', context)
 
             # Create the EmailMultiAlternatives object
-            email = EmailMultiAlternatives(subject, '', from_email, [to_email])
+            email = EmailMultiAlternatives(subject, body=html_content, from_email=from_email, to=[to_email])
+            email.content_subtype = 'html'
 
             # Attach the HTML content
             email.attach_alternative(html_content, 'text/html')
