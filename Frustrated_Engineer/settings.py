@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     "FAQ",
     "AboutUs",
     "ContactUs",
-    "Email_Notice_App"
+    "Email_Notice_App",
+    "authentication"
 ]
 
 MIDDLEWARE = [

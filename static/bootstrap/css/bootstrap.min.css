@@ -13865,12 +13865,21 @@ body {
         text-align: right
     }
 }
-
-@media(min-width: 992px) {
+@media(max-width:992px){
     .bg-transparent {
         --bs-bg-opacity: 1;
         background-color: white !important
     }
+    .navpadding{
+        margin-top:50px ;
+    }
+    
+}
+@media(min-width: 992px) {
+    .navpadding{
+        margin-top:100px ;
+    }
+
     .clean-card {
         margin-bottom: 0px
     }

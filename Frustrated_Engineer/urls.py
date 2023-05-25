@@ -28,4 +28,6 @@ urlpatterns = [
     path("FAQ/",include('FAQ.urls')),
     path("AboutUs/",include('AboutUs.urls')),
     path("ContactUs/",include('ContactUs.urls')),
+    path('signup/', include('authentication.urls')),
+
 ]

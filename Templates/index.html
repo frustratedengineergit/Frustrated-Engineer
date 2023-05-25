@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Home - Frustrated Engineers{% endblock title %}
-{% block styles %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/atropos@1.0.2/atropos.min.css">{% endblock styles %}
+{% block styles %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/atropos@1.0.2/atropos.min.css">
+<style>.bg-transparent {
+    --bs-bg-opacity: 1;
+    background-color: transparent !important
+}</style>
+{% endblock styles %}
 {% load static %}   
 {% block body %}
     <div class="bgmaterials clean-bg">
@@ -3538,7 +3543,7 @@
                             </div>
                             <br>
                             <div style="display: flex;align-items: center;justify-content: center;">
-                                <button class="bn30 bn31 jello-h" type="button" style="z-index: 2;">Join Now</button>
+                                <button class="bn30 bn31 jello-h" type="button" style="z-index: 2;" onclick="window.location.href='/signup'">Join Now</button>
                             </div>
                         </div>
                     </div>
