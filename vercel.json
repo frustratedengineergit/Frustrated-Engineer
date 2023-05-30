@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "FRUSTRATED-ENGINEER/wsgi.py",
+        "src": "Frustrated_Engineer/wsgi.py/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
       },
@@ -21,7 +21,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "FRUSTRATED-ENGINEER/wsgi.py"
+        "dest": "Frustrated_Engineer/wsgi.py"
       }
     ]
   }
