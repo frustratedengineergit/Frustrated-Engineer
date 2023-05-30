@@ -91,18 +91,25 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "Frustrated_Engineer.wsgi.application"
+# WSGI_APPLICATION = "Frustrated_Engineer.wsgi.application"
+import importlib
+
+try:
+    importlib.import_module('Frustrated_Engineer.wsgi')
+    WSGI_APPLICATION = 'Frustrated_Engineer.wsgi.application'
+except ImportError:
+    WSGI_APPLICATION = 'vercel_app.wsgi.app'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 # DATABASES = {
 #     "default": {
@@ -113,6 +120,34 @@ DATABASES = {
 #     }
 # }
 # DATABASES["default"]=dj_database_url.config()
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+uri = "mongodb+srv://adminfe:adminfe@frustratedengineerdb.vzzlf6q.mongodb.net/?retryWrites=true&w=majority"
+# Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'))
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'FEDataBase',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': 'mongodb+srv://adminfe:adminfe@frustratedengineerdb.vzzlf6q.mongodb.net/',
+            'username': 'adminfe',
+            'password': 'adminfe',
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1',
+        }
+    }
+}
+
 
 
 # Password validation
