@@ -42,9 +42,16 @@ class EmailMessageAdmin(admin.ModelAdmin):
         if users:
             recipient_emails.extend(user.email for user in users)
 
+        if not recipient_emails:
+            # Send email to all users if no users or group is selected
+            recipient_emails = User.objects.values_list('email', flat=True)
+
         send_mail(subject, message, 'ietcommunity2@gmail.com', recipient_emails)
 
         # Save the email message after sending
         obj.save()
-
+class EmailMessageAdmin(admin.ModelAdmin):
+    form = EmailMessageAdminForm
+    list_display = ('subject',)
+    
 admin.site.register(EmailMessage, EmailMessageAdmin)
