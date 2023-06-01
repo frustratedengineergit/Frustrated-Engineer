@@ -91,14 +91,14 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = "Frustrated_Engineer.wsgi.application"
-import importlib
+WSGI_APPLICATION = "Frustrated_Engineer.wsgi.application"
+# import importlib
 
-try:
-    importlib.import_module('Frustrated_Engineer.wsgi')
-    WSGI_APPLICATION = 'Frustrated_Engineer.wsgi.application'
-except ImportError:
-    WSGI_APPLICATION = 'vercel_app.wsgi.app'
+# try:
+#     importlib.import_module('Frustrated_Engineer.wsgi')
+#     WSGI_APPLICATION = 'Frustrated_Engineer.wsgi.application'
+# except ImportError:
+#     WSGI_APPLICATION = 'vercel_app.wsgi.app'
 
 
 

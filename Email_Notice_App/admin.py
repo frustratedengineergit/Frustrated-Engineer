@@ -1,13 +1,13 @@
 from django.contrib import admin
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from .models import EmailMessage
-from .forms import EmailMessageForm
-from django.core.mail import send_mail
 from django import forms
 from django.contrib.auth.models import Group, User
 
 
 class EmailMessageAdminForm(forms.ModelForm):
-
     users = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
         required=False,
@@ -20,38 +20,52 @@ class EmailMessageAdminForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'select2'}),
     )
 
+    use_html_template = forms.BooleanField(label='Use HTML Template', required=False)
+
+    html_template = forms.FileField(label='HTML Template', required=False)
+
     class Meta:
         model = EmailMessage
         fields = '__all__'
 
+
 class EmailMessageAdmin(admin.ModelAdmin):
     form = EmailMessageAdminForm
+    list_display = ('subject',)
 
     def save_model(self, request, obj, form, change):
         subject = obj.subject
         message = obj.message
         group = form.cleaned_data.get('group')
         users = form.cleaned_data.get('users')
+        use_html_template = form.cleaned_data.get('use_html_template')
+        html_template = form.cleaned_data.get('html_template')
 
         recipient_emails = []
 
         if group:
-            recipients = group.user_set.all()  # Get all users in the selected group
+            recipients = group.user_set.all()
             recipient_emails.extend(user.email for user in recipients)
 
         if users:
             recipient_emails.extend(user.email for user in users)
 
         if not recipient_emails:
-            # Send email to all users if no users or group is selected
             recipient_emails = User.objects.values_list('email', flat=True)
 
-        send_mail(subject, message, 'ietcommunity2@gmail.com', recipient_emails)
+        if use_html_template and html_template:
+            # Send HTML email using the uploaded template
+            html_content = html_template.read().decode('utf-8')
+            text_content = strip_tags(html_content)
+            email = EmailMultiAlternatives(subject, text_content, 'communityfrustratedengineer@gmail.com', recipient_emails)
+            email.attach_alternative(html_content, "text/html")
+            email.send()
+        else:
+            # Send plain text email
+            email = EmailMultiAlternatives(subject, message, 'communityfrustratedengineer@gmail.com', recipient_emails)
+            email.send()
 
-        # Save the email message after sending
         obj.save()
-class EmailMessageAdmin(admin.ModelAdmin):
-    form = EmailMessageAdminForm
-    list_display = ('subject',)
-    
+
+
 admin.site.register(EmailMessage, EmailMessageAdmin)

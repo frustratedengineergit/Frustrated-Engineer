@@ -79,7 +79,7 @@ def signup(request):
 
             # Send a welcome email
             subject = 'Welcome to Frustrated Engineers'
-            from_email = 'ietcommunity2@gmail.com'
+            from_email = 'communityfrustratedengineer@gmail.com'
             to_email = email
 
             # Load the email template
