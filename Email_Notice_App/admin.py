@@ -5,6 +5,7 @@ from django.utils.html import strip_tags
 from .models import EmailMessage
 from django import forms
 from django.contrib.auth.models import Group, User
+from django.template import Template, Context
 
 
 class EmailMessageAdminForm(forms.ModelForm):
@@ -34,8 +35,8 @@ class EmailMessageAdmin(admin.ModelAdmin):
     list_display = ('subject',)
 
     def save_model(self, request, obj, form, change):
-        subject = form.cleaned_data.get('subject')
-        message = form.cleaned_data.get('message')
+        subject = obj.subject
+        message = obj.message
         group = form.cleaned_data.get('group')
         users = form.cleaned_data.get('users')
         use_html_template = form.cleaned_data.get('use_html_template')
@@ -54,9 +55,11 @@ class EmailMessageAdmin(admin.ModelAdmin):
             recipient_emails = User.objects.values_list('email', flat=True)
 
         if use_html_template and html_template:
-            # Read and decode the HTML template file
-            with html_template.open() as file:
-                html_content = file.read().decode('utf-8')
+            # Read and decode the HTML template
+            html_content = html_template.read().decode('utf-8')
+
+            # Create a Template object from the HTML content
+            template = Template(html_content)
 
             # Fetch user details from the database
             user_details = User.objects.filter(email__in=recipient_emails).values('username', 'first_name', 'last_name')
@@ -68,7 +71,7 @@ class EmailMessageAdmin(admin.ModelAdmin):
                 'recipient_emails': recipient_emails,
                 'user_details': user_details,
             }
-            rendered_html = render_to_string(html_template.name, context)
+            rendered_html = template.render(Context(context))
 
             # Generate plain text content from HTML
             text_content = strip_tags(rendered_html)
