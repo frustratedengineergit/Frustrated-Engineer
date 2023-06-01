@@ -34,8 +34,8 @@ class EmailMessageAdmin(admin.ModelAdmin):
     list_display = ('subject',)
 
     def save_model(self, request, obj, form, change):
-        subject = obj.subject
-        message = obj.message
+        subject = form.cleaned_data.get('subject')
+        message = form.cleaned_data.get('message')
         group = form.cleaned_data.get('group')
         users = form.cleaned_data.get('users')
         use_html_template = form.cleaned_data.get('use_html_template')
@@ -54,11 +54,25 @@ class EmailMessageAdmin(admin.ModelAdmin):
             recipient_emails = User.objects.values_list('email', flat=True)
 
         if use_html_template and html_template:
-            # Send HTML email using the uploaded template
-            html_content = html_template.read().decode('utf-8')
-            text_content = strip_tags(html_content)
+            with html_template.open() as file:
+                # Read and decode the HTML template file
+                html_content = file.read().decode('utf-8')
+
+            # Render HTML template with context
+            context = {
+                'subject': subject,
+                'message': message,
+                'recipient_emails': recipient_emails,
+                
+            }
+            rendered_html = render_to_string(html_template.name, context)
+
+            # Generate plain text content from HTML
+            text_content = strip_tags(rendered_html)
+
+            # Send email with HTML content
             email = EmailMultiAlternatives(subject, text_content, 'communityfrustratedengineer@gmail.com', recipient_emails)
-            email.attach_alternative(html_content, "text/html")
+            email.attach_alternative(rendered_html, "text/html")
             email.send()
         else:
             # Send plain text email
