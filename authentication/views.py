@@ -83,7 +83,7 @@ def signup(request):
             to_email = email
 
             # Load the email template
-            context = {'fname': name}
+            context = {'first_name': name}
             html_content = render_to_string('email_templates/Signup_Email.html', context)
 
             # Create the EmailMultiAlternatives object

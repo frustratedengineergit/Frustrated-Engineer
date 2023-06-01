@@ -54,16 +54,19 @@ class EmailMessageAdmin(admin.ModelAdmin):
             recipient_emails = User.objects.values_list('email', flat=True)
 
         if use_html_template and html_template:
+            # Read and decode the HTML template file
             with html_template.open() as file:
-                # Read and decode the HTML template file
                 html_content = file.read().decode('utf-8')
+
+            # Fetch user details from the database
+            user_details = User.objects.filter(email__in=recipient_emails).values('username', 'first_name', 'last_name')
 
             # Render HTML template with context
             context = {
                 'subject': subject,
                 'message': message,
                 'recipient_emails': recipient_emails,
-                
+                'user_details': user_details,
             }
             rendered_html = render_to_string(html_template.name, context)
 
