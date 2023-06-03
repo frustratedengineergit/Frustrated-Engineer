@@ -15,12 +15,12 @@ def success(request):
 
 def signup(request):
     if request.method == "POST":
-        name = request.POST["name"]
-        username = request.POST["username"]
-        email = request.POST["email"]
-        password = request.POST["password"]
-        countryCode = request.POST["countryCode"]
-        phone = request.POST["phone"]
+        name = request.POST.get("name")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        countryCode = request.POST.get("countryCode")
+        phone = request.POST.get("phone")
 
         # Validate username
         if len(username) > 15:
@@ -35,7 +35,7 @@ def signup(request):
 
         if not re.match(r"^[a-zA-Z0-9_]+$", username):
             context = {
-                "error_message": "Username should only contain letters, numbers, and underscore (_).",
+                "error_message": "Username should only contain letters, numbers, and underscores (_).",
                 "name": name,
                 "email": email,
                 "countryCode": countryCode,
@@ -67,13 +67,11 @@ def signup(request):
 
             # Create the user
             user = User.objects.create_user(
-                username=username, email=email, password=password
+                username=username, email=email, password=password, first_name=name
             )
-            user.first_name = name
-            user.save()
 
             # Create member details
-            member = MemberDetail(user=user, phone=phone, email=email)
+            member = MemberDetail.objects.create(user=user, phone=phone, email=email)
             # Set other member details as needed
             member.save()
 
@@ -97,18 +95,16 @@ def signup(request):
             email.send()
 
             # Log in the user
-            user = authenticate(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
             login(request, user)
 
-            return redirect("success")  # Redirect to a home page
+            return redirect("success")  # Redirect to the home page
 
         except ValidationError as e:
+            error_message = "An error occurred. Please try again."
+
             if "username" in e.message_dict:
-                error_message = (
-                    "** Username already exists. Please choose a different username. **"
-                )
-            else:
-                error_message = "An error occurred. Please try again."
+                error_message = "Username already exists. Please choose a different username."
 
             context = {
                 "error_message": error_message,
@@ -120,9 +116,8 @@ def signup(request):
             return render(request, "signup.html", context)
 
         except IntegrityError:
-            error_message = (
-                "** Username already exists. Please choose a different username. **"
-            )
+            error_message = "Username already exists. Please choose a different username."
+
             context = {
                 "error_message": error_message,
                 "name": name,
