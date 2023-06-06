@@ -9,6 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator
 from markdownx.widgets import MarkdownxWidget
+from django.utils import timezone
+
+
 
 @login_required
 def blog_posts(request):
@@ -20,37 +23,23 @@ def blog_posts(request):
 
 
 class BlogPostForm(forms.ModelForm):
+    tags_input = forms.CharField(max_length=100, required=False)
+    categories_input = forms.CharField(max_length=100, required=False)
     class Meta:
         model = BlogPost
         fields = ['title', 'content', 'categories', 'tags']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': MarkdownxWidget(attrs={'class': 'form-control'}),
+            'categories': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
+
         }
 
-    CATEGORIES_CHOICES = [
-        ('category1', 'Category 1'),
-        ('category2', 'Category 2'),
-        ('category3', 'Category 3'),
-        ('category4', 'Category 4'),
-        ('category5', 'Category 5'),
-    ]
-    TAGS_CHOICES = [
-        ('tag1', 'Tag 1'),
-        ('tag2', 'Tag 2'),
-        ('tag3', 'Tag 3'),
-        ('tag4', 'Tag 4'),
-        ('tag5', 'Tag 5'),
-        ('tag6', 'Tag 6'),
-    ]
-    categories = forms.MultipleChoiceField(
-        choices=CATEGORIES_CHOICES,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
-    )
-    tags = forms.MultipleChoiceField(
-        choices=TAGS_CHOICES,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
-    )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['categories'].queryset = Category.objects.all()
+        self.fields['tags'].queryset = Tag.objects.all()
 
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
@@ -61,8 +50,24 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
 
+        # Save user-generated tags
+        tags_input = self.request.POST.get('tags_input')
+        if tags_input:
+            tags = [tag.strip() for tag in tags_input.split(',')]
+            for tag in tags:
+                tag_obj, _ = Tag.objects.get_or_create(name=tag)
+                form.instance.tags.add(tag_obj)
+
+        # Save user-generated categories
+        categories_input = self.request.POST.get('categories_input')
+        if categories_input:
+            categories = [category.strip() for category in categories_input.split(',')]
+            for category in categories:
+                category_obj, _ = Category.objects.get_or_create(name=category)
+                form.instance.categories.add(category_obj)
+
+        return super().form_valid(form)
 
 class BlogPostDetailView(DetailView):
     model = BlogPost

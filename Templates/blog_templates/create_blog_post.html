@@ -1,49 +1,28 @@
 {% extends 'base.html' %}
-{% block title %}Blogs - Frustrated Engineers{% endblock title %}
-{% load static %}
+
+{% block title %}Create Blog Post - Frustrated Engineers{% endblock title %}
+
 {% block body %}
-<main class="page blog-post">
-  <section class="clean-block clean-post dark">
-    <div class="container">
-      <div class="block-content">
-        <div class="post-image" style="background-image: url('assets/img/Events/image3.jpg')"></div>
-        <div class="post-body">
-          <h2>Create a Blog Post</h2>
-          <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-              <label for="{{ form.title.id_for_label }}">Title:</label>
-              {{ form.title }}
-            </div>
-            <div class="form-group">
-              <label for="{{ form.content.id_for_label }}">Content:</label>
-              {{ form.content }}
-            </div>
-            <div class="form-group">
-              <label>Categories:</label>
-              <div class="d-flex flex-wrap">
-                {% for category in form.categories %}
-                  <div class="form-check mr-3">
-                    {{ category }}
+<main class="page create-blog-post">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-content">
+                <h2>Create Blog Post</h2>
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <div class="form-group">
+                      <label for="id_tags_input">Tags (separated by commas):</label>
+                      <input type="text" class="form-control" id="id_tags_input" name="tags_input">
                   </div>
-                {% endfor %}
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Tags:</label>
-              <div class="d-flex flex-wrap">
-                {% for tag in form.tags %}
-                  <div class="form-check mr-3">
-                    {{ tag }}
+                  <div class="form-group">
+                      <label for="id_categories_input">Categories (separated by commas):</label>
+                      <input type="text" class="form-control" id="id_categories_input" name="categories_input">
                   </div>
-                {% endfor %}
-              </div>
+                  <button type="submit">Create</button>
+              </form>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 </main>
 {% endblock body %}

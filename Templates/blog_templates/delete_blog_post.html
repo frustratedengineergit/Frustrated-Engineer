@@ -1,22 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}Blogs - Frustrated Engineers{% endblock title %}
-
-{% load static %}
+{% block title %}Delete Blog Post - Frustrated Engineers{% endblock title %}
 
 {% block body %}
-<main class="page blog-post">
-  <section class="clean-block clean-post dark">
-    <div class="container">
-      <div class="block-content">
-        <h2>Delete Blog Post</h2>
-        <p>Are you sure you want to delete this blog post?</p>
-        <form method="post">
-          {% csrf_token %}
-          <button type="submit">Delete</button>
-        </form>
-      </div>
-    </div>
-  </section>
+<main class="page delete-blog-post">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-content">
+                <h2>Delete Blog Post</h2>
+                <p>Are you sure you want to delete the blog post "{{ post.title }}"?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                    <a href="{% url 'blog_post_detail' post.pk %}">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </section>
 </main>
 {% endblock body %}
