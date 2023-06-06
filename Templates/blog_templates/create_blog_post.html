@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Blogs - Frustrated Engineers{%endblock title %}
+{% load static %}
+{% block body %}
+<main class="page blog-post">
+  <section class="clean-block clean-post dark">
+    <div class="container">
+      <div class="block-content">
+        <div class="post-image" style="background-image: url('assets/img/Events/image3.jpg')"></div>
+        <div class="post-body">
+          <!-- create_blog_post.html -->
+
+          <h2>Create a Blog Post</h2>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock body %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Blogs - Frustrated Engineers{% endblock title %}
+
+{% load static %}
+
+{% block body %}
+<main class="page blog-post">
+  <section class="clean-block clean-post dark">
+    <div class="container">
+      <div class="block-content">
+        <h2>All Blog Posts</h2>
+        <ul>
+          {% for post in posts %}
+          <li>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            <p>Author: {{ post.author }}</p>
+            <p>Created at: {{ post.created_at }}</p>
+            <a href="{% url 'blog_post_detail' post.pk %}">Read More</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock body %}
