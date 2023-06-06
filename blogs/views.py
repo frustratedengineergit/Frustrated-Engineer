@@ -24,14 +24,19 @@ def blog_posts(request):
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
-        fields = ['title', 'content', 'categories', 'tags']
+        fields = ['title', 'content']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': MarkdownxWidget(attrs={'class': 'form-control'}),
-            'categories': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
-            'tags': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         }
-
+        categories = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+    )
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+    )
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
@@ -43,15 +48,14 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-
-class BlogPostDetailView(LoginRequiredMixin, DetailView):
+class BlogPostDetailView(DetailView):
     model = BlogPost
     template_name = 'blog_templates/blog_post_detail.html'
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['comments'] = self.object.comment_set.all()
+        context['comments'] = self.object.comments.all()
         return context
 
 
@@ -62,21 +66,30 @@ class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'post'
     success_url = reverse_lazy('blog_posts')
 
-
 class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogPost
     template_name = 'blog_templates/delete_blog_post.html'
     context_object_name = 'post'
     success_url = reverse_lazy('blog_posts')
 
-
 # Authentication views
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('blog_posts')
+        else:
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'login.html')
 
 @login_required
 def logout_view(request):
     logout(request)
     return redirect('blog_posts')
-
 
 @login_required
 def comment_create(request, pk):
