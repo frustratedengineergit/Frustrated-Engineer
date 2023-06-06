@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from blogs.views import login_view, logout_view
 
 admin.site.site_header = "Frustrated Engineer Admin"
 admin.site.site_title = "Frustrated Engineer Admin Portal"
@@ -29,5 +30,8 @@ urlpatterns = [
     path("AboutUs/",include('AboutUs.urls')),
     path("ContactUs/",include('ContactUs.urls')),
     path('signup/', include('authentication.urls')),
+    path('blog/', include('blogs.urls')),
+    path('accounts/login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
 
 ]

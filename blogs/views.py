@@ -28,6 +28,10 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'blog_templates/create_blog_post.html'
     success_url = reverse_lazy('blog_posts')
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 class BlogPostDetailView(DetailView):
     model = BlogPost
     template_name = 'blog_templates/blog_post_detail.html'
