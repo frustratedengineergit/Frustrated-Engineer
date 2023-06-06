@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import BlogPost, Comment
+from .models import BlogPost, Comment, Category, Tag
 from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator
 from markdownx.widgets import MarkdownxWidget
-from .models import Category, Tag
 
 
 @login_required
@@ -29,7 +28,7 @@ class BlogPostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': MarkdownxWidget(attrs={'class': 'form-control'}),
         }
-        categories = forms.ModelMultipleChoiceField(
+    categories = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
@@ -37,6 +36,7 @@ class BlogPostForm(forms.ModelForm):
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
+
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
@@ -47,6 +47,7 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
@@ -66,11 +67,13 @@ class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'post'
     success_url = reverse_lazy('blog_posts')
 
+
 class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogPost
     template_name = 'blog_templates/delete_blog_post.html'
     context_object_name = 'post'
     success_url = reverse_lazy('blog_posts')
+
 
 # Authentication views
 
@@ -86,10 +89,12 @@ def login_view(request):
             messages.error(request, 'Invalid username or password.')
     return render(request, 'login.html')
 
+
 @login_required
 def logout_view(request):
     logout(request)
     return redirect('blog_posts')
+
 
 @login_required
 def comment_create(request, pk):
