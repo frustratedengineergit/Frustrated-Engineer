@@ -10,7 +10,6 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from markdownx.widgets import MarkdownxWidget
 
-
 @login_required
 def blog_posts(request):
     posts = BlogPost.objects.all()
@@ -23,17 +22,33 @@ def blog_posts(request):
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'categories', 'tags']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': MarkdownxWidget(attrs={'class': 'form-control'}),
         }
-    categories = forms.ModelMultipleChoiceField(
-        queryset=Category.objects.all(),
+
+    CATEGORIES_CHOICES = [
+        ('category1', 'Category 1'),
+        ('category2', 'Category 2'),
+        ('category3', 'Category 3'),
+        ('category4', 'Category 4'),
+        ('category5', 'Category 5'),
+    ]
+    TAGS_CHOICES = [
+        ('tag1', 'Tag 1'),
+        ('tag2', 'Tag 2'),
+        ('tag3', 'Tag 3'),
+        ('tag4', 'Tag 4'),
+        ('tag5', 'Tag 5'),
+        ('tag6', 'Tag 6'),
+    ]
+    categories = forms.MultipleChoiceField(
+        choices=CATEGORIES_CHOICES,
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
-    tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(),
+    tags = forms.MultipleChoiceField(
+        choices=TAGS_CHOICES,
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
     )
 
@@ -103,3 +118,4 @@ def comment_create(request, pk):
         content = request.POST.get('content')
         Comment.objects.create(post=post, author=request.user, content=content)
     return redirect('blog_post_detail', pk=post.pk)
+

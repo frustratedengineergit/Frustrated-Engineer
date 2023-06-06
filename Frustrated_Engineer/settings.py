@@ -60,7 +60,8 @@ INSTALLED_APPS = [
     "ContactUs",
     "Email_Notice_App",
     "authentication",
-    "blogs"
+    "blogs",
+    'markdownx'
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Blogs - Frustrated Engineers{%endblock title %}
+{% block title %}Blogs - Frustrated Engineers{% endblock title %}
 {% load static %}
 {% block body %}
 <main class="page blog-post">
@@ -8,13 +8,38 @@
       <div class="block-content">
         <div class="post-image" style="background-image: url('assets/img/Events/image3.jpg')"></div>
         <div class="post-body">
-          <!-- create_blog_post.html -->
-
           <h2>Create a Blog Post</h2>
           <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
+            <div class="form-group">
+              <label for="{{ form.title.id_for_label }}">Title:</label>
+              {{ form.title }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.content.id_for_label }}">Content:</label>
+              {{ form.content }}
+            </div>
+            <div class="form-group">
+              <label>Categories:</label>
+              <div class="d-flex flex-wrap">
+                {% for category in form.categories %}
+                  <div class="form-check mr-3">
+                    {{ category }}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Tags:</label>
+              <div class="d-flex flex-wrap">
+                {% for tag in form.tags %}
+                  <div class="form-check mr-3">
+                    {{ tag }}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
       </div>
