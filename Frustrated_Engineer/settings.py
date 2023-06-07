@@ -171,6 +171,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Integration of Firebase
+
+import firebase_admin
+from firebase_admin import credentials
+
+# Build path to service account JSON file
+service_account_path = os.path.join(BASE_DIR, 'credentials', 'frustratedengineer.json')
+
+# Initialize Firebase app
+cred = credentials.Certificate(service_account_path)
+firebase_admin.initialize_app(cred)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

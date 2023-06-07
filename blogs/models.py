@@ -24,6 +24,7 @@ class BlogPost(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Category)
     tags = models.ManyToManyField(Tag)
+    image_url = models.URLField(blank=True)
 
     def __str__(self):
         return self.title
@@ -37,3 +38,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author.username} on "{self.post.title}"'
+    

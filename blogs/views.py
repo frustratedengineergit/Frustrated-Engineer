@@ -9,7 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator
 from markdownx.widgets import MarkdownxWidget
-from django.utils import timezone
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import storage as firebase_storage
 
 
 
@@ -21,10 +23,7 @@ def blog_posts(request):
     page_obj = paginator.get_page(page_number)
     return render(request, 'blog_templates/blog_post.html', {'page_obj': page_obj})
 
-
 class BlogPostForm(forms.ModelForm):
-    tags_input = forms.CharField(max_length=100, required=False)
-    categories_input = forms.CharField(max_length=100, required=False)
     class Meta:
         model = BlogPost
         fields = ['title', 'content', 'categories', 'tags']
@@ -33,14 +32,12 @@ class BlogPostForm(forms.ModelForm):
             'content': MarkdownxWidget(attrs={'class': 'form-control'}),
             'categories': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
-
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['categories'].queryset = Category.objects.all()
         self.fields['tags'].queryset = Tag.objects.all()
-
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
@@ -51,21 +48,67 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
 
-        # Save user-generated tags
-        tags_input = self.request.POST.get('tags_input')
-        if tags_input:
-            tags = [tag.strip() for tag in tags_input.split(',')]
-            for tag in tags:
-                tag_obj, _ = Tag.objects.get_or_create(name=tag)
-                form.instance.tags.add(tag_obj)
+        image_file = self.request.FILES.get('image')
+        if image_file:
+            # Upload the image to Firebase Storage
+            bucket = firebase_storage.bucket('frustratedengineer-9a5cc.appspot.com')
+            filename = f"blogimages/{image_file.name}"
+            blob = bucket.blob(filename)
+            blob.upload_from_file(image_file)
 
-        # Save user-generated categories
-        categories_input = self.request.POST.get('categories_input')
-        if categories_input:
-            categories = [category.strip() for category in categories_input.split(',')]
-            for category in categories:
-                category_obj, _ = Category.objects.get_or_create(name=category)
-                form.instance.categories.add(category_obj)
+            # Get the public URL of the uploaded image
+            image_url = blob.public_url
+            # Save the image URL to the form instance
+            form.instance.image_url = image_url
+
+        return super().form_valid(form)
+
+
+class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
+    model = BlogPost
+    form_class = BlogPostForm
+    template_name = 'blog_templates/update_blog_post.html'
+    context_object_name = 'post'
+    success_url = reverse_lazy('blog_posts')
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+
+        # Save the updated post
+        post.save()
+
+        # Handle the image file
+        image_file = self.request.FILES.get('image')
+        if image_file:
+            # Get the bucket
+            bucket = firebase_storage.bucket('frustratedengineer-9a5cc.appspot.com')
+
+            # Delete the previous image
+            previous_image_url = self.object.image_url
+            if previous_image_url:
+                try:
+                    # Extract the filename from the URL
+                    filename = previous_image_url.split('/')[-1]
+
+                    # Delete the file from the bucket
+                    blob = bucket.blob(filename)
+                    blob.delete()
+                except Exception as e:
+                    # Handle the exception as per your requirement
+                    pass
+                
+            # Upload the new image
+            filename = f"blogimages/{image_file.name}"
+            blob = bucket.blob(filename)
+            blob.upload_from_file(image_file.file)
+
+            # Get the public URL of the uploaded file
+            image_url = blob.public_url
+            post.image_url = image_url
+
+        # Save the updated post with the image URL
+        post.save()
 
         return super().form_valid(form)
 
@@ -76,23 +119,28 @@ class BlogPostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['comments'] = self.object.comments.all()
+        post = self.object
+        context['image_url'] = post.image_url if post.image_url else None
+        context['comments'] = post.comments.all()
         return context
-
-
-class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
-    model = BlogPost
-    form_class = BlogPostForm
-    template_name = 'blog_templates/update_blog_post.html'
-    context_object_name = 'post'
-    success_url = reverse_lazy('blog_posts')
-
 
 class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogPost
     template_name = 'blog_templates/delete_blog_post.html'
     context_object_name = 'post'
     success_url = reverse_lazy('blog_posts')
+
+    def delete(self, request, *args, **kwargs):
+        post = self.get_object()
+
+        # Delete the image from Firebase Storage when deleting the blog post
+        image_url = post.image_url
+        if image_url:
+            bucket = firebase_storage.bucket('frustratedengineer-9a5cc.appspot.com')
+            blob = bucket.blob(image_url)
+            blob.delete()
+
+        return super().delete(request, *args, **kwargs)
 
 
 # Authentication views

@@ -2,12 +2,89 @@
 
 {% block title %}Blogs - Frustrated Engineers{% endblock title %}
 
+{% block styles %}
+<style>
+    .blog-post {
+        padding-top: 80px;
+    }
+
+    .blog-post .clean-post {
+        background-color: #f6f6f6;
+        color: #000;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+    .blog-post h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .blog-post .posts {
+        margin-bottom: 30px;
+    }
+
+    .blog-post .post {
+        margin-bottom: 40px;
+    }
+
+    .blog-post h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .blog-post p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .blog-post .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .blog-post .pagination a {
+        color: #000;
+        text-decoration: none;
+        margin: 0 5px;
+        font-size: 16px;
+        transition: color 0.3s;
+    }
+
+    .blog-post .pagination a:hover {
+        color: #6c757d;
+    }
+
+    .blog-post .pagination .current-page {
+        font-weight: bold;
+    }
+    .button-create {
+      background-color: #200E49;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  
+    .button-create:hover {
+      background-color: #321772;
+    }
+    .block-content{
+      padding:5% !important;
+    }
+</style>
+{% endblock styles %}
+
 {% block body %}
 <main class="page blog-post">
     <section class="clean-block clean-post dark">
         <div class="container">
             <div class="block-content">
                 <h2>Blog Posts</h2>
+                <a href="{% url 'create_blog_post' %}" class="button-create btn btn-primary mb-3">Create a New Blog</a>
                 <div class="posts">
                     {% for post in page_obj %}
                     <article class="post">

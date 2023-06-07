@@ -2,6 +2,63 @@
 
 {% block title %}Delete Blog Post - Frustrated Engineers{% endblock title %}
 
+{% block styles %}
+<style>
+    .delete-blog-post {
+        padding-top: 80px;
+    }
+
+    .delete-blog-post .clean-form {
+        background-color: #f6f6f6;
+        color: #000;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+    .delete-blog-post h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .delete-blog-post p {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    .delete-blog-post form {
+        display: inline-block;
+    }
+
+    .delete-blog-post button {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .delete-blog-post button:hover {
+        background-color: #c82333;
+    }
+
+    .delete-blog-post a {
+        color: #000;
+        text-decoration: none;
+        margin-left: 10px;
+        font-size: 16px;
+        transition: color 0.3s;
+    }
+
+    .delete-blog-post a:hover {
+        color: #6c757d;
+    }
+</style>
+{% endblock styles %}
+
 {% block body %}
 <main class="page delete-blog-post">
     <section class="clean-block clean-form dark">
