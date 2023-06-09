@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'dashboard_base.html' %}
 
 {% block title %}{{ post.title }} - Frustrated Engineers{% endblock title %}
-{% block styles %}
+{% block dashboardstyles %}
 <style>
   .post-image {
     margin-bottom: 20px;
@@ -57,9 +57,15 @@
   .comment-form button:hover {
     background-color: #321772;
   }
+  .sidebar{
+    height:130vh!important;    
+  }
+  .contentdashboard{
+    height:110vh!important;
+  }
 </style>
-{% endblock styles %}
-{% block body %}
+{% endblock dashboardstyles %}
+{% block dashboardbody %}
 <main class="page blog-post-detail">
     <section class="clean-block clean-post dark">
         <div class="container">
@@ -115,4 +121,4 @@
         </div>
     </section>
 </main>
-{% endblock body %}
+{% endblock dashboardbody %}

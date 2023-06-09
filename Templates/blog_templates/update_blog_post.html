@@ -76,6 +76,12 @@
     color: #D730E9;
     
   }
+  .sidebar{
+    height:130vh!important;    
+  }
+  .contentdashboard{
+    height:110vh!important;
+  }
 </style>
 
 
@@ -132,9 +138,9 @@
 </main>
 {% endblock body %}
 
-{% block javascript %}
+{% block dashjs %}
 <script>
-  // JavaScript code to display the selected image filename
+  // Javascript code to display the selected image filename
   const fileInput = document.getElementById('id_image');
   const filenameContainer = document.querySelector('.filename');
 
@@ -147,4 +153,4 @@
     }
   });
 </script>
-{% endblock javascript %}
+{% endblock dashjs %}
