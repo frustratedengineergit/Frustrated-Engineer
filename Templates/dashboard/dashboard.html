@@ -34,22 +34,60 @@
     max-width: 200px;
     height: auto;
     margin-top: 10px;
+    border-radius: 50%;
   }
+
+  /* Additional CSS for a dashing dashboard */
+
+  .dashboard-container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dashboard-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-container h2 {
+    color: #555;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  .dashboard-container ul li {
+    color: #777;
+    font-weight: bold;
+  }
+  
+  .dashboard-container img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 50%;
+    border: 4px solid #ddd;
+  }
+
 </style>
 {% endblock dashboardstyles %}
 
 {% block dashboardbody %}
+<div class="dashboard-container">
+  <h1>Welcome to Your Dashboard</h1>
 
-          <h1>Welcome to Your Dashboard</h1>
-
-          <h2>User Information</h2>
-          <ul>
-            <li><strong>Username:</strong> {{ user.username }}</li>
-            <li><strong>First Name:</strong> {{ user.first_name }}</li>
-            <li><strong>Last Name:</strong> {{ user.last_name }}</li>
-            <li><strong>Email:</strong> {{ user.email }}</li>
-            <li><strong>Profile Picture:</strong> <img style='width:200px;height:200px;' src="{{ user.userprofile.profile_picture_url }}"
-                alt="Profile Picture"></li>
-          </ul>
-        
+  <h2>User Information</h2>
+  <ul>
+    <li><strong>Username:</strong> {{ user.username }}</li>
+    <li><strong>First Name:</strong> {{ user.first_name }}</li>
+    <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+    <li><strong>Email:</strong> {{ user.email }}</li>
+    <li>
+      <strong>Profile Picture:</strong>
+      <br>
+      <img src="{{ user.userprofile.profile_picture_url }}" alt="Profile Picture">
+    </li>
+  </ul>
+</div>
 {% endblock dashboardbody %}
