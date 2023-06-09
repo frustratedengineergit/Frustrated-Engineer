@@ -12,6 +12,7 @@ from markdownx.widgets import MarkdownxWidget
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import storage
+from dashboard.views import dashboard
 
 
 
@@ -152,7 +153,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('blog_posts')
+            return redirect('dashboard')
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'login.html')
@@ -161,7 +162,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('blog_posts')
+    return redirect('dashboard')
 
 
 @login_required
