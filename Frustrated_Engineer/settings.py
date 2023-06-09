@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     "Email_Notice_App",
     "authentication",
     "blogs",
-    'markdownx'
+    'markdownx',
+    'dashboard'
 ]
 
 MIDDLEWARE = [

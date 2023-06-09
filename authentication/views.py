@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 import re
+from dashboard.models import UserProfile
 
 
 def success(request):
@@ -69,7 +70,9 @@ def signup(request):
             user = User.objects.create_user(
                 username=username, email=email, password=password, first_name=name
             )
-
+            # Create User Profile
+            user_profile = UserProfile.objects.create(user=user)
+            user_profile.save()
             # Create member details
             member = MemberDetail.objects.create(user=user, phone=phone, email=email)
             # Set other member details as needed

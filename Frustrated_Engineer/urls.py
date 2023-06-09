@@ -30,8 +30,8 @@ urlpatterns = [
     path("AboutUs/",include('AboutUs.urls')),
     path("ContactUs/",include('ContactUs.urls')),
     path('signup/', include('authentication.urls')),
-    path('blog/', include('blogs.urls')),
     path('accounts/login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('dashboard/', include('dashboard.urls')),
 
 ]

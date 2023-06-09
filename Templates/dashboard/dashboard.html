@@ -1,0 +1,55 @@
+{% extends 'dashboard_base.html' %}
+
+{% block dashboardstyles %}
+<style>
+  .dashboard-view {
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .dashboard-view h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-view h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  .dashboard-view ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dashboard-view ul li {
+    margin-bottom: 10px;
+  }
+
+  .dashboard-view img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
+  }
+</style>
+{% endblock dashboardstyles %}
+
+{% block dashboardbody %}
+
+          <h1>Welcome to Your Dashboard</h1>
+
+          <h2>User Information</h2>
+          <ul>
+            <li><strong>Username:</strong> {{ user.username }}</li>
+            <li><strong>First Name:</strong> {{ user.first_name }}</li>
+            <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+            <li><strong>Email:</strong> {{ user.email }}</li>
+            <li><strong>Profile Picture:</strong> <img src="{{ user.userprofile.profile_picture_url }}"
+                alt="Profile Picture"></li>
+          </ul>
+        
+{% endblock dashboardbody %}

@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 from markdownx.widgets import MarkdownxWidget
 import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import storage as firebase_storage
+from firebase_admin import storage
 
 
 
@@ -51,7 +51,7 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
         image_file = self.request.FILES.get('image')
         if image_file:
             # Upload the image to Firebase Storage
-            bucket = firebase_storage.bucket('frustratedengineer-9a5cc.appspot.com')
+            bucket = storage.bucket('frustratedengineer-9a5cc.appspot.com')
             filename = f"blogimages/{image_file.name}"
             blob = bucket.blob(filename)
             blob.upload_from_file(image_file)
@@ -82,7 +82,7 @@ class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
         image_file = self.request.FILES.get('image')
         if image_file:
             # Get the bucket
-            bucket = firebase_storage.bucket('frustratedengineer-9a5cc.appspot.com')
+            bucket = storage.bucket('frustratedengineer-9a5cc.appspot.com')
 
             # Delete the previous image
             previous_image_url = self.object.image_url
@@ -136,7 +136,7 @@ class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
         # Delete the image from Firebase Storage when deleting the blog post
         image_url = post.image_url
         if image_url:
-            bucket = firebase_storage.bucket('frustratedengineer-9a5cc.appspot.com')
+            bucket = storage.bucket('frustratedengineer-9a5cc.appspot.com')
             blob = bucket.blob(image_url)
             blob.delete()
 

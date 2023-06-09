@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+
+    /* Sidebar */
+    .sidebar {
+        width: 250px;
+        height: 90vh;
+        position: fixed;
+        top: 90px;
+        left: 0;
+        background-color: #ffffff;
+        padding: 20px;
+        overflow-y: auto;
+        margin: 0;
+        
+    }
+    .sidebar1{
+        background-color: #321772 !important;
+    }
+
+    .sidebar.collapsed {
+        width: 60px;
+    }
+
+    .sidebar.collapsed .sidebar-icon {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .sidebar.collapsed .sidebar-item {
+        text-align: center;
+    }
+
+    .sidebar .sidebar-icon {
+        margin-bottom: 10px;
+    }
+
+    .sidebar .sidebar-item {
+        margin-bottom: 15px;
+    }
+
+    .sidebar .sidebar-item a {
+        display: flex;
+        align-items: center;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .sidebar .sidebar-item .sidebar-text {
+        margin-left: 10px;
+    }
+
+    .contentdashboard {
+        margin-left: 250px; /* Adjust this value based on the sidebar width */
+        padding: 20px;
+        transition: all 0.3s ease;
+        text-align:left;
+        height: 70vh;
+    }
+
+    .sidebar.collapsed ~ .contentdashboard {
+        margin-left: 60px;
+    }
+    
+    .toggle-sidebar {
+        position: fixed;
+        top: 100px;
+        left: 20px;
+        font-size: 24px;
+        color: #333;
+        cursor: pointer;
+        z-index: 999;
+    }
+    .clean-block{
+        padding-bottom: 0;
+    }
+    .page-footer{
+        position: sticky;
+        width: 100%;
+        background-color: #321772!important;
+    }
+    .bg-new{
+        background-color: #321772;
+    }
+    .bn31:after{
+        background-color: #321772!important;
+    }
+</style>
+{% endblock styles %}
+
+{% block body %}
+<main class="page gallery-page">
+    <section class="clean-block clean-gallery bg-new text-white navpadding" style="display: flex;">
+        <div class="sidebar" id="sidebar">
+            <br>
+        
+            <div class="sidebar-item">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-home"></i>
+                    <span class="sidebar-text">Home</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{% url 'dashboard' %}">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="{% url 'update_user' %}">
+                    <i class="fas fa-user"></i>
+                    <span class="sidebar-text">Update User</span>
+                </a>
+            </div>
+            <!-- Add more sidebar items as needed -->
+        
+            <!-- Add your additional sidebar content here -->
+            <div class="sidebar-item">
+                <!-- Additional sidebar item -->
+            </div>
+        </div>
+      <div class="container">
+        <div class="block-heading">
+            <div class="toggle-sidebar" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <div class="contentdashboard">
+                {% block dashboardbody %}
+                {% endblock dashboardbody %}
+            </div>
+        </div>
+      </div>
+    </section>
+  </main>
+{% endblock body %}
+
+{% block javascript %}
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('collapsed');
+    }
+
+    window.addEventListener('scroll', function() {
+        var sidebar = document.getElementById('sidebar');
+        var toggleSidebar = document.querySelector('.toggle-sidebar');
+        var sidebarItems = sidebar.querySelectorAll('.sidebar-item a');
+        var distance = 10; // Change this value to adjust the scrolling distance
+
+        if (document.body.scrollTop > distance || document.documentElement.scrollTop > distance) {
+            sidebar.classList.add('sidebar1');
+            updateSidebarItemsColor('#fff', sidebarItems);
+            toggleSidebar.style.color = '#fff';
+        } else {
+            sidebar.classList.remove('sidebar1');
+            updateSidebarItemsColor('#333', sidebarItems);
+            toggleSidebar.style.color = '#333';
+        }
+    });
+    function updateSidebarItemsColor(color, items) {
+    items.forEach(function(item) {
+        item.style.color = color;
+    });
+}
+</script>
+{% block dashjs %}
+{% endblock dashjs %}
+{% endblock javascript %}
