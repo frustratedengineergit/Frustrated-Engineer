@@ -28,6 +28,9 @@ def update_user(request):
 
 class UpdateUserForm(UserChangeForm):
     profile_picture = forms.ImageField(required=False)
+    linkedin_profile = forms.URLField(max_length=200, required=False)
+    facebook_profile = forms.URLField(max_length=200, required=False)
+    instagram_profile = forms.URLField(max_length=200, required=False)
 
     class Meta:
         model = User
@@ -43,7 +46,29 @@ class UpdateUserForm(UserChangeForm):
             user_profile.save()
 
         return profile_picture
+    
+    def clean_linkedin_profile(self):
+        linkedin_profile = self.cleaned_data.get('linkedin_profile')
+        user_profile, _ = UserProfile.objects.get_or_create(user=self.instance)
+        user_profile.linkedin_profile = linkedin_profile
+        user_profile.save()
+        return linkedin_profile
 
+    def clean_facebook_profile(self):
+        facebook_profile = self.cleaned_data.get('facebook_profile')
+        user_profile, _ = UserProfile.objects.get_or_create(user=self.instance)
+        user_profile.facebook_profile = facebook_profile
+        user_profile.save()
+        return facebook_profile
+
+    def clean_instagram_profile(self):
+        instagram_profile = self.cleaned_data.get('instagram_profile')
+        user_profile, _ = UserProfile.objects.get_or_create(user=self.instance)
+        user_profile.instagram_profile = instagram_profile
+        user_profile.save()
+        return instagram_profile
+    
+    
 def save_profile_picture(profile_picture):
     bucket = storage.bucket('frustratedengineer-9a5cc.appspot.com')
     filename = f"profile_pictures/{profile_picture.name}"

@@ -31,63 +31,70 @@
   }
 
   .dashboard-view img {
-    max-width: 200px;
+    max-width: 300px;
     height: auto;
     margin-top: 10px;
-    border-radius: 50%;
   }
-
-  /* Additional CSS for a dashing dashboard */
 
   .dashboard-container {
     background-color: #f2f2f2;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #777;
   }
 
-  .dashboard-container h1 {
+  .dashboard-container h2 {
     color: #333;
     margin-bottom: 20px;
   }
 
-  .dashboard-container h2 {
+  .dashboard-container strong {
     color: #555;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 10px;
+    font-weight: bold;
+    display: block;
+  }
+
+  .dashboard-container ul {
+    list-style-type: none;
+    margin-top: 0;
+    padding-left: 0;
   }
 
   .dashboard-container ul li {
     color: #777;
-    font-weight: bold;
-  }
-  
-  .dashboard-container img {
-    max-width: 200px;
-    height: auto;
-    margin-top: 10px;
-    border-radius: 50%;
-    border: 4px solid #ddd;
+    margin-bottom: 10px;
   }
 
+  .dashboard-container img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 4px solid #ddd;
+  }
 </style>
 {% endblock dashboardstyles %}
 
 {% block dashboardbody %}
 <div class="dashboard-container">
-  <h1>Welcome to Your Dashboard</h1>
-
-  <h2>User Information</h2>
-  <ul>
-    <li><strong>Username:</strong> {{ user.username }}</li>
-    <li><strong>First Name:</strong> {{ user.first_name }}</li>
-    <li><strong>Last Name:</strong> {{ user.last_name }}</li>
-    <li><strong>Email:</strong> {{ user.email }}</li>
-    <li>
-      <strong>Profile Picture:</strong>
-      <br>
-      <img src="{{ user.userprofile.profile_picture_url }}" alt="Profile Picture">
-    </li>
-  </ul>
+  <img src="{{ user.userprofile.profile_picture_url }}" alt="Profile Picture">
+  <div style="display:flex;flex-direction: column; margin:30px; justify-content: center;">
+    <h2>Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
+    <strong>Username:</strong> {{ user.username }}<br>
+    <strong>Email:</strong> {{ user.email }}<br>
+    <strong>Social Media:</strong>
+    <ul>
+      <li><i class="icon-social-linkedin"></i> LinkedIn: {{ user.userprofile.linkedin_profile }}</li>
+      <li><i class="icon-social-facebook"></i> Facebook: {{ user.userprofile.facebook_profile }}</li>
+      <li><i class="icon-social-instagram"></i> Instagram: {{ user.userprofile.instagram_profile }}</li>
+    </ul>
+  </div>
 </div>
 {% endblock dashboardbody %}

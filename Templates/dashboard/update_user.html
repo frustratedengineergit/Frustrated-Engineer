@@ -1,37 +1,70 @@
 {% extends 'dashboard_base.html' %}
 
-
 {% block dashboardstyles %}
 <style>
-  .form-group {
+  .form-container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #777;
+  }
+
+  .form-container h1 {
+    font-size: 28px;
+    font-weight: bold;
     margin-bottom: 20px;
   }
 
-  label {
+  .form-container .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-container label {
     font-weight: bold;
   }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="file"] {
+  .form-container input[type="text"],
+  .form-container input[type="email"],
+  .form-container input[type="password"],
+  .form-container input[type="file"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
 
-  .filename {
+  .form-container .filename {
     display: block;
     margin-top: 5px;
     font-style: italic;
   }
-  
+
+  .form-container button[type="submit"] {
+    background-color: #321772;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .form-container button[type="submit"]:hover {
+    background-color: #200E49;
+  }
+  .sidebar{
+    height:150vh!important;    
+  }
+  .contentdashboard{
+    height:130vh!important;
+  }
 </style>
 {% endblock dashboardstyles %}
 
 {% block dashboardbody %}
-  <h1>Update User Profile</h1>
+<h1>Update User Profile</h1>
+<div class="form-container">
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
@@ -51,11 +84,24 @@
       <input type="email" id="id_email" name="email" value="{{ form.email.value }}" class="form-control">
     </div>
     <div class="form-group">
+      <label for="id_linkedin_profile">LinkedIn Profile:</label>
+      <input type="text" id="id_linkedin_profile" name="linkedin_profile" value="{{ form.instance.userprofile.linkedin_profile }}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="id_facebook_profile">Facebook Profile:</label>
+      <input type="text" id="id_facebook_profile" name="facebook_profile" value="{{ form.instance.userprofile.facebook_profile }}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="id_instagram_profile">Instagram Profile:</label>
+      <input type="text" id="id_instagram_profile" name="instagram_profile" value="{{ form.instance.userprofile.instagram_profile }}" class="form-control">
+    </div>
+    <div class="form-group">
       <label for="id_profile_picture">Profile Picture:</label>
       <input type="file" id="id_profile_picture" name="profile_picture" class="form-control-file form-control">
       <span class="filename"></span>
     </div>
     <br>
-    <button type="submit" class="bn30 bn31">Update</button>
+    <button type="submit">Update</button>
   </form>
+</div>
 {% endblock dashboardbody %}
