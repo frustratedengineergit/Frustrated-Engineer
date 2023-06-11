@@ -27,7 +27,8 @@
   .form-container input[type="text"],
   .form-container input[type="email"],
   .form-container input[type="password"],
-  .form-container input[type="file"] {
+  .form-container input[type="file"],
+  .form-container input[type="date"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -52,6 +53,31 @@
 
   .form-container button[type="submit"]:hover {
     background-color: #200E49;
+  }
+  .add-btn{
+    background-color:#ffffff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+  }
+  .add-btn:hover,.add-btn:focus{
+    background-color: #321772;
+    border: #321772;
+    color:white;
+  }
+  .remove-field{
+    background-color:#ffffff;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+  }
+  .remove-field:hover,.remove-field:focus{
+    background-color: #321772;
+    border: #321772;
+    color:white;
   }
 
 </style>
@@ -79,6 +105,18 @@
       <input type="email" id="id_email" name="email" value="{{ form.email.value }}" class="form-control">
     </div>
     <div class="form-group">
+      <label for="id_dob">Date of Birth:</label>
+      <input type="date" id="id_dob" name="dob" value="{{ form.instance.userprofile.dob }}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="id_phone_number">Phone Number:</label>
+      <input type="text" id="id_phone_number" name="phone_number" value="{{ form.instance.userprofile.phone_number }}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="id_address">Address:</label>
+      <input type="text" id="id_address" name="address" value="{{ form.instance.userprofile.address }}" class="form-control">
+    </div>
+    <div class="form-group">
       <label for="id_linkedin_profile">LinkedIn Profile:</label>
       <input type="text" id="id_linkedin_profile" name="linkedin_profile" value="{{ form.instance.userprofile.linkedin_profile }}" class="form-control">
     </div>
@@ -95,8 +133,86 @@
       <input type="file" id="id_profile_picture" name="profile_picture" class="form-control-file form-control">
       <span class="filename"></span>
     </div>
+    <div class="form-group">
+      <label for="id_education">Education:</label>
+      <div id="education-fields">
+        {% for education_form in form.education_forms %}
+          <div class="education-field">
+            <input type="text" name="{{ education_form.prefix }}-institution" value="{{ education_form.institution.value }}" class="form-control" placeholder="Institution">
+            <input type="text" name="{{ education_form.prefix }}-degree" value="{{ education_form.degree.value }}" class="form-control" placeholder="Degree">
+            <input type="text" name="{{ education_form.prefix }}-year" value="{{ education_form.year.value }}" class="form-control" placeholder="Year">
+            <button type="button" class="remove-field">Remove</button>
+          </div>
+        {% endfor %}
+      </div>
+      <button type="button" class="add-btn" id="add-education-btn">Add Education</button>
+    </div>
+    <div class="form-group">
+      <label for="id_skill">Skills:</label>
+      <div id="skill-fields">
+        {% for skill_form in form.skill_forms %}
+          <div class="skill-field">
+            <input type="text" name="{{ skill_form.prefix }}-skill" value="{{ skill_form.skill.value }}" class="form-control" placeholder="Skill">
+            <button type="button" class="remove-field">Remove</button>
+          </div>
+        {% endfor %}
+      </div>
+      <button type="button" class="add-btn" id="add-skill-btn">Add Skill</button>
+    </div>
     <br>
     <button type="submit">Update</button>
   </form>
 </div>
 {% endblock dashboardbody %}
+{% block dashjs %}
+<script>
+  // Add Education
+  var educationFieldsContainer = document.getElementById('education-fields');
+  var addEducationBtn = document.getElementById('add-education-btn');
+  var educationFieldIndex = {{ form.education_forms|length }};
+
+  addEducationBtn.addEventListener('click', function() {
+    var educationField = document.createElement('div');
+    educationField.className = 'education-field';
+    educationField.innerHTML = `
+      <input type="text" name="education-${educationFieldIndex}-institution" class="form-control" placeholder="Institution">
+      <input type="text" name="education-${educationFieldIndex}-degree" class="form-control" placeholder="Degree">
+      <input type="text" name="education-${educationFieldIndex}-year" class="form-control" placeholder="Year">
+      <button type="button" class="remove-field">Remove</button>
+    `;
+    educationFieldsContainer.appendChild(educationField);
+    educationFieldIndex++;
+  });
+
+  // Remove Education
+  educationFieldsContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-field')) {
+      e.target.parentElement.remove();
+    }
+  });
+
+  // Add Skill
+  var skillFieldsContainer = document.getElementById('skill-fields');
+  var addSkillBtn = document.getElementById('add-skill-btn');
+  var skillFieldIndex = {{ form.skill_forms|length }};
+
+  addSkillBtn.addEventListener('click', function() {
+    var skillField = document.createElement('div');
+    skillField.className = 'skill-field';
+    skillField.innerHTML = `
+      <input type="text" name="skill-${skillFieldIndex}" class="form-control" placeholder="Skill">
+      <button type="button" class="remove-field">Remove</button>
+    `;
+    skillFieldsContainer.appendChild(skillField);
+    skillFieldIndex++;
+  });
+
+  // Remove Skill
+  skillFieldsContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-field')) {
+      e.target.parentElement.remove();
+    }
+  });
+</script>
+{% endblock dashjs %}
+
