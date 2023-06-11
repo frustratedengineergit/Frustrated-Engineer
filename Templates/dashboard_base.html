@@ -9,7 +9,7 @@
     /* Sidebar */
     .sidebar {
         width: 250px;
-        height: 110vh;
+        height:100%;
         position: fixed;
         top: 90px;
         left: 0;
@@ -20,7 +20,7 @@
         
     }
     .sidebar1{
-        background: linear-gradient(to top,#192E47 8%, #030617 100%)!important;
+        background: transparent;
     }
 
     .sidebar.collapsed {
@@ -61,7 +61,6 @@
         padding: 20px;
         transition: all 0.3s ease;
         text-align:left;
-        height: 90vh;
     }
 
     .sidebar.collapsed ~ .contentdashboard {
@@ -129,6 +128,12 @@
                 <a href="{% url 'blog_posts' %}">
                     <i class="fas fa-laptop-code"></i>
                     <span class="sidebar-text">Blogs</span>
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="/logout">
+                    <i class="fas icon-logout"></i>
+                    <span class="sidebar-text">Logout</span>
                 </a>
             </div>
         </div>
