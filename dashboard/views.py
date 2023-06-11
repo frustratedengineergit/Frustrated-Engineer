@@ -31,6 +31,9 @@ class UpdateUserForm(UserChangeForm):
     linkedin_profile = forms.URLField(max_length=200, required=False)
     facebook_profile = forms.URLField(max_length=200, required=False)
     instagram_profile = forms.URLField(max_length=200, required=False)
+    dob = forms.DateField(required=False)
+    phone_number = forms.CharField(max_length=20, required=False)
+    address = forms.CharField(max_length=200, required=False)
 
     class Meta:
         model = User
@@ -68,6 +71,26 @@ class UpdateUserForm(UserChangeForm):
         user_profile.save()
         return instagram_profile
     
+    def clean_dob(self):
+        dob = self.cleaned_data.get('dob')
+        user_profile, _ = UserProfile.objects.get_or_create(user=self.instance)
+        user_profile.dob = dob
+        user_profile.save()
+        return dob
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        user_profile, _ = UserProfile.objects.get_or_create(user=self.instance)
+        user_profile.phone_number = phone_number
+        user_profile.save()
+        return phone_number
+
+    def clean_address(self):
+        address = self.cleaned_data.get('address')
+        user_profile, _ = UserProfile.objects.get_or_create(user=self.instance)
+        user_profile.address = address
+        user_profile.save()
+        return address
     
 def save_profile_picture(profile_picture):
     bucket = storage.bucket('frustratedengineer-9a5cc.appspot.com')
