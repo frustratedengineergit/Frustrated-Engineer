@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .models import MemberDetail
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.core.mail import EmailMultiAlternatives
@@ -70,13 +69,11 @@ def signup(request):
             user = User.objects.create_user(
                 username=username, email=email, password=password, first_name=name
             )
+            #Generating a Default Profile Picture Url for future updates.
+            url_profile = 'https://media.tenor.com/aNVkfUVH1GsAAAAd/gif.gif'
             # Create User Profile
-            user_profile = UserProfile.objects.create(user=user)
+            user_profile = UserProfile.objects.create(user=user,phone_number=phone,profile_picture_url=url_profile)
             user_profile.save()
-            # Create member details
-            member = MemberDetail.objects.create(user=user, phone=phone, email=email)
-            # Set other member details as needed
-            member.save()
 
             # Send a welcome email
             subject = 'Welcome to Frustrated Engineers'

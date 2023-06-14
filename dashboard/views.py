@@ -12,7 +12,7 @@ from django.contrib.auth import update_session_auth_hash
 
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard/dashboard.html')
+    return render(request, 'dashboard/user_profile.html')
 
 @login_required
 def update_user(request):
@@ -34,6 +34,8 @@ class UpdateUserForm(UserChangeForm):
     dob = forms.DateField(required=False)
     phone_number = forms.CharField(max_length=20, required=False)
     address = forms.CharField(max_length=200, required=False)
+    bio = forms.CharField(widget=forms.Textarea, required=False)
+    
 
     class Meta:
         model = User
@@ -91,6 +93,13 @@ class UpdateUserForm(UserChangeForm):
         user_profile.address = address
         user_profile.save()
         return address
+    
+    def clean_bio(self):
+        bio = self.cleaned_data.get('bio')
+        user_profile, _ = UserProfile.objects.get_or_create(user=self.instance)
+        user_profile.bio = bio
+        user_profile.save()
+        return bio
     
 def save_profile_picture(profile_picture):
     bucket = storage.bucket('frustratedengineer-9a5cc.appspot.com')

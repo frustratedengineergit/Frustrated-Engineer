@@ -5,11 +5,10 @@
 {% block dashboardstyles %}{% endblock dashboardstyles %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <style>
-
     /* Sidebar */
     .sidebar {
         width: 250px;
-        height:100%;
+        height: 100%;
         position: fixed;
         top: 90px;
         left: 0;
@@ -17,24 +16,26 @@
         padding: 20px;
         overflow-y: auto;
         margin: 0;
-        
+
     }
-    .sidebar1{
+
+    .sidebar1 {
         background: transparent;
     }
 
     .sidebar.collapsed {
-        width: 60px;
-    }
-
-    .sidebar.collapsed .sidebar-icon {
-        font-size: 24px;
-        text-align: center;
-        margin-bottom: 10px;
+        width: 90px;
     }
 
     .sidebar.collapsed .sidebar-item {
+        transform: scale(1.5);
         text-align: center;
+        margin-bottom: 30px;
+        margin-left: 20px;
+    }
+
+    .sidebar.collapsed .sidebar-item:hover {
+        transform: scale(2);
     }
 
     .sidebar .sidebar-icon {
@@ -57,16 +58,17 @@
     }
 
     .contentdashboard {
-        margin-left: 250px; /* Adjust this value based on the sidebar width */
+        margin-left: 250px;
+        /* Adjust this value based on the sidebar width */
         padding: 20px;
         transition: all 0.3s ease;
-        text-align:left;
+        text-align: left;
     }
 
-    .sidebar.collapsed ~ .contentdashboard {
+    .sidebar.collapsed~.contentdashboard {
         margin-left: 60px;
     }
-    
+
     .toggle-sidebar {
         position: fixed;
         top: 120px;
@@ -76,30 +78,75 @@
         cursor: pointer;
         z-index: 999;
     }
-    .clean-block{
+    .clean-block {
         padding-bottom: 0;
     }
-    .page-footer{
+
+    .page-footer {
         position: sticky;
         width: 100%;
     }
-    .bg-new{
-        background: linear-gradient(to top,#192E47 0%, #030617 92%);
+
+    .bg-new {
+        background: linear-gradient(to top, #192E47 0%, #030617 92%);
     }
+
     .sidebar.collapsed .sidebar-text {
         display: none;
-    }   
+    }
+
+    #sky {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        z-index: 0;
+    }
+
+    #shootingstars {
+        margin: 0;
+        padding: 0;
+        width: 150vh;
+        height: 100vw;
+        position: fixed;
+        overflow: hidden;
+        transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%)) rotate(120deg);
+    }
+
+    .wish {
+        height: 2px;
+        top: 300px;
+        width: 100px;
+        margin: 0;
+        opacity: 0;
+        padding: 0;
+        background-color: white;
+        position: absolute;
+        background: linear-gradient(-45deg, white, rgba(0, 0, 255, 0));
+        filter: drop-shadow(0 0 6px white);
+        overflow: hidden;
+    }
+    .contentdashboard{
+        position: relative;
+    }
 </style>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
 {% endblock styles %}
 
 {% block body %}
 <main class="page gallery-page">
     <section class="clean-block clean-gallery bg-new text-white navpadding" style="display: flex;">
+        <div id="root" /></div>
         <div class="sidebar" id="sidebar">
             <br>
             <br>
             <br>
-        
+
             <div class="sidebar-item">
                 <a href="/">
                     <i class="fas fa-home"></i>
@@ -109,7 +156,7 @@
             <div class="sidebar-item">
                 <a href="{% url 'dashboard' %}">
                     <i class="fas fa-chart-bar"></i>
-                    <span class="sidebar-text">Dashboard</span>
+                    <span class="sidebar-text">User Profile</span>
                 </a>
             </div>
             <div class="sidebar-item">
@@ -137,30 +184,37 @@
                 </a>
             </div>
         </div>
-      <div class="container">
-        <div class="block-heading">
-            <div class="toggle-sidebar" onclick="toggleSidebar()">
-                <i class="fas fa-bars"></i>
-            </div>
-            
-            <div class="contentdashboard">
-                {% block dashboardbody %}
-                {% endblock dashboardbody %}
+        <div class="container">
+            <div class="block-heading">
+                <div class="toggle-sidebar" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="contentdashboard">
+                    {% block dashboardbody %}
+                    {% endblock dashboardbody %}
+                </div>
             </div>
         </div>
-      </div>
     </section>
-  </main>
+</main>
 {% endblock body %}
 
 {% block javascript %}
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
+        const toggleSidebar = document.querySelector('.toggle-sidebar');
         sidebar.classList.toggle('collapsed');
+        if (sidebar.classList.contains('collapsed')) {
+            // Sidebar is collapsed
+            toggleSidebar.style.left = '35px'; // Adjust the desired property
+        } else {
+            // Sidebar is expanded
+            toggleSidebar.style.left = '20px'; // Adjust the desired property
+        }
     }
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         var sidebar = document.getElementById('sidebar');
         var toggleSidebar = document.querySelector('.toggle-sidebar');
         var sidebarItems = sidebar.querySelectorAll('.sidebar-item a');
@@ -177,10 +231,121 @@
         }
     });
     function updateSidebarItemsColor(color, items) {
-    items.forEach(function(item) {
-        item.style.color = color;
+        items.forEach(function (item) {
+            item.style.color = color;
+        });
+    }
+</script>
+<script>
+    // Twinkling Night Sky by Sharna
+
+class StarrySky extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      num: 60,
+      vw: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+      vh: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+    };
+  }
+
+  starryNight() {
+    anime({
+      targets: ["#sky .star"],
+      opacity: [
+        {
+          duration: 700,
+          value: "0"
+        },
+        {
+          duration: 700,
+          value: "1"
+        }
+      ],
+      easing: "linear",
+      loop: true,
+      delay: (el, i) => 50 * i
     });
+  }
+
+  shootingStars() {
+    anime({
+      targets: ["#shootingstars .wish"],
+      easing: "linear",
+      loop: true,
+      delay: (el, i) => 1000 * i,
+      opacity: [
+        {
+          duration: 700,
+          value: "1"
+        }
+      ],
+      width: [
+        {
+          value: "150px"
+        },
+        {
+          value: "0px"
+        }
+      ],
+      translateX: 350
+    });
+  }
+
+  randomRadius() {
+    return Math.random() * 0.7 + 0.6;
+  }
+
+  getRandomX() {
+    return Math.floor(Math.random() * Math.floor(this.state.vw)).toString();
+  }
+
+  getRandomY() {
+    return Math.floor(Math.random() * Math.floor(this.state.vh)).toString();
+  }
+
+  componentDidMount() {
+    this.starryNight();
+    this.shootingStars();
+  }
+
+  render() {
+    const { num } = this.state;
+    return (
+      React.createElement("div", { id: "App" },
+        React.createElement("svg", { id: "sky" },
+          [...Array(num)].map((x, y) =>
+            React.createElement("circle", {
+              cx: this.getRandomX(),
+              cy: this.getRandomY(),
+              r: this.randomRadius(),
+              stroke: "none",
+              strokeWidth: "0",
+              fill: "white",
+              key: y,
+              className: "star"
+            })
+          )
+        ),
+        React.createElement("div", { id: "shootingstars" },
+          [...Array(60)].map((x, y) =>
+            React.createElement("div", {
+              key: y,
+              className: "wish",
+              style: {
+                left: `${this.getRandomY()}px`,
+                top: `${this.getRandomX()}px`
+              }
+            })
+          )
+        )
+      )
+    );
+  }
 }
+
+ReactDOM.render(React.createElement(StarrySky, null), document.getElementById("root"));
+
 </script>
 {% block dashjs %}
 {% endblock dashjs %}
