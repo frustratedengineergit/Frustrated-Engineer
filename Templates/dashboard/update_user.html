@@ -3,11 +3,10 @@
 {% block dashboardstyles %}
 <style>
   .form-container {
-    background-color: #f2f2f2;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #777;
+    color: #fff;
   }
 
   .form-container h1 {
@@ -28,11 +27,14 @@
   .form-container input[type="email"],
   .form-container input[type="password"],
   .form-container input[type="file"],
-  .form-container input[type="date"] {
-    width: 100%;
+  .form-container input[type="date"] ,
+  .form-container textarea {
+  width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    color: white;
+    background-color: transparent;
   }
 
   .form-container .filename {
