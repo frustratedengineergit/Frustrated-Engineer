@@ -19,7 +19,7 @@ from dashboard.views import dashboard
 @login_required
 def blog_posts(request):
     posts = BlogPost.objects.all()
-    paginator = Paginator(posts, 10)  # Set the number of posts to display per page
+    paginator = Paginator(posts, 9)  # Set the number of posts to display per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'blog_templates/blog_post.html', {'page_obj': page_obj})

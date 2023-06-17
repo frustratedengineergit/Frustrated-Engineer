@@ -1,9 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'dashboard_base.html' %}
 
-{% block title %}Create Blog Post - Frustrated Engineers{% endblock title %}
+{% block title %}Update Blog Post - Frustrated Engineers{% endblock title %}
 
-{% block styles %}
-
+{% block dashboardstyles %}
 <style>
   .form-group {
     margin-bottom: 20px;
@@ -26,12 +25,16 @@
     box-sizing: border-box;
   }
 
+  textarea {
+    height: 200px;
+  }
+
   select[multiple] {
     height: auto;
   }
 
   button[type="submit"] {
-    background-color: #200E49;
+    background-color: #200e49;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -62,7 +65,7 @@
 
   #id_image {
     display: inline-block;
-    padding: 10px 15px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
@@ -73,83 +76,75 @@
   .form-group-file .filename {
     margin-top: 5px;
     font-size: 14px;
-    color: #D730E9;
-    
+    color: #d730e9;
   }
-  .sidebar{
-    height:130vh!important;    
-  }
-  .contentdashboard{
-    height:110vh!important;
+
+  .form-group input[type="text"],
+  .form-group-file input[type="file"],
+  .form-group select,
+  .form-group textarea {
+    background-color: transparent !important;
+    color: white !important;
   }
 </style>
+{% endblock dashboardstyles %}
 
+{% block dashboardbody %}
+<h2>Update Blog Post</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
 
-{% endblock styles %}
+  <div class="form-group">
+    <label for="id_title">Title:</label>
+    <input type="text" id="id_title" name="title" value="{{ post.title }}" required>
+  </div>
 
-{% block body %}
-<main class="page create-blog-post">
-  <section class="clean-block clean-form dark">
-    <div class="container">
-      <div class="block-content">
-        <h2>Create Blog Post</h2>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
+  <div class="form-group">
+    <label for="id_content">Content:</label>
+    <textarea id="id_content" name="content" required>{{ post.content }}</textarea>
+  </div>
 
-          <div class="form-group">
-            <label for="id_title">Title:</label>
-            <input type="text" id="id_title" name="title" required>
-          </div>
+  <div class="form-group-file">
+    <label for="id_image">Image:</label>
+    <input type="file" id="id_image" name="image" class="form-control-file form-control">
+    <span class="filename"></span>
+  </div>
 
-          <div class="form-group">
-            <label for="id_content">Content:</label>
-            <textarea id="id_content" name="content" required></textarea>
-          </div>
+  <div class="form-group">
+    <label for="id_categories">Categories:</label>
+    <select id="id_categories" name="categories" multiple required>
+      {% for category in form.fields.categories.queryset %}
+      <option value="{{ category.pk }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
 
-          <div class="form-group-file">
-            <label for="id_image">Image:</label>
-            <input type="file" id="id_image" name="image">
-            <span class="filename"></span>
-          </div>
+  <div class="form-group">
+    <label for="id_tags">Tags:</label>
+    <select id="id_tags" name="tags" multiple required>
+      {% for tag in form.fields.tags.queryset %}
+      <option value="{{ tag.pk }}">{{ tag.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
 
-          <div class="form-group">
-            <label for="id_categories">Categories:</label>
-            <select id="id_categories" name="categories" multiple required>
-              {% for category in form.fields.categories.queryset %}
-              <option value="{{ category.pk }}">{{ category.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
 
-          <div class="form-group">
-            <label for="id_tags">Tags:</label>
-            <select id="id_tags" name="tags" multiple required>
-              {% for tag in form.fields.tags.queryset %}
-              <option value="{{ tag.pk }}">{{ tag.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
-  </section>
-</main>
-{% endblock body %}
+{% endblock dashboardbody %}
 
 {% block dashjs %}
 <script>
   // Javascript code to display the selected image filename
-  const fileInput = document.getElementById('id_image');
-  const filenameContainer = document.querySelector('.filename');
+  const fileInput = document.getElementById("id_image");
+  const filenameContainer = document.querySelector(".filename");
 
-  fileInput.addEventListener('change', (event) => {
+  fileInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) {
       filenameContainer.textContent = file.name;
     } else {
-      filenameContainer.textContent = '';
+      filenameContainer.textContent = "";
     }
   });
 </script>

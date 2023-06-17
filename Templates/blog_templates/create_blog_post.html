@@ -61,7 +61,7 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
 
   #id_image {
     display: inline-block;
-    padding: 10px 15px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
@@ -74,7 +74,13 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
     font-size: 14px;
     color: #d730e9;
   }
-  
+  .form-group input[type="text"],
+  .form-group-file input[type="file"],
+  .form-group select,
+  .form-group textarea{
+    background-color:transparent!important;
+    color: white!important;
+  }
 </style>
 
 {% endblock dashboardstyles %} {% block dashboardbody %}
@@ -95,7 +101,7 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
 
   <div class="form-group-file">
     <label for="id_image">Image:</label>
-    <input type="file" id="id_image" name="image" />
+    <input type="file" id="id_image" name="image" class="form-control-file form-control"/>
     <span class="filename"></span>
   </div>
 
