@@ -14,8 +14,6 @@ from firebase_admin import credentials
 from firebase_admin import storage
 from dashboard.views import dashboard
 
-
-
 @login_required
 def blog_posts(request):
     posts = BlogPost.objects.all()
@@ -173,3 +171,14 @@ def comment_create(request, pk):
         Comment.objects.create(post=post, author=request.user, content=content)
     return redirect('blog_post_detail', pk=post.pk)
 
+
+@login_required
+def comment_delete(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    # Check if the authenticated user is the author of the comment
+    if comment.author == request.user:
+        comment.delete()
+    
+    # Redirect to the appropriate page
+    return redirect('blog_post_detail', pk=comment.post.pk)

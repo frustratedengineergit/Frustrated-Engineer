@@ -62,7 +62,9 @@ INSTALLED_APPS = [
     "authentication",
     "blogs",
     'markdownx',
-    'dashboard'
+    'dashboard',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
 ]
 
 MIDDLEWARE = [

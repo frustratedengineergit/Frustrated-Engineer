@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block styles %}
+<style>
+    /* CSS Starts Here */
+    .pwrf {
+        padding: 10%;
+        text-align: center;
+    }
+    .pwrf input{
+        background-color: transparent;
+        border-radius: 8px;
+        border:white solid 1px;
+        padding: 10px;
+        color: white;
+        margin-top: 20px;
+        width: 300px;
+    }
+    .pwrf button{
+        background-color: transparent;
+        border-radius: 8px;
+        border:white solid 1px;
+        padding: 10px;
+        color: white;
+        margin-top: 20px;
+    }
+    .pwrf button:hover{
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        border:white solid 1px;
+        padding: 10px;
+        color: white;
+    }
+</style>
+{% endblock styles %}
+{% block body %}
+<main class="page">
+    <section class="clean-block bg-decided1 text-white navpadding">
+        <div class="container">
+            <!-- Akash Make Html Related Changes Here -->
+            <div class="pwrf">
+                <h1>Verify OTP</h1>
+                {% if error %}
+                <p>{{ error }}</p>
+                {% endif %}
+                <form method="POST" action="{% url 'verify_otp' %}">
+                    {% csrf_token %}
+                    <input type="text" name="otp" placeholder="Enter OTP" required /><br>
+                    <button type="submit">Verify OTP</button>
+                </form>
+            </div>
+            <!-- Till Here and remove the Comments if unnecessory -->
+        </div>
+    </section>
+</main>
+{% endblock body %}

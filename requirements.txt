@@ -7,3 +7,5 @@ pymongo==3.13.0
 sqlparse==0.2.4 
 django-markdownx
 firebase-admin
+django-otp
+pyotp

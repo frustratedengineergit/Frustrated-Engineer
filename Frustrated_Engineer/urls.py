@@ -29,7 +29,7 @@ urlpatterns = [
     path("FAQ/",include('FAQ.urls')),
     path("AboutUs/",include('AboutUs.urls')),
     path("ContactUs/",include('ContactUs.urls')),
-    path('signup/', include('authentication.urls')),
+    path('authentication/', include('authentication.urls')),
     path('accounts/login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('dashboard/', include('dashboard.urls')),
