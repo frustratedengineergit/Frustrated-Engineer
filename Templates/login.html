@@ -1,174 +1,138 @@
 {% extends 'base.html' %}
 
 {% block title %}Blogs - Frustrated Engineers{% endblock title %}
-
+    
 {% load static %}
-
+    
 {% block styles %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css"
   integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <style>
-  .wrapper {
-    width: 100%;
-    height: 650px;
-    position: relative;
-    margin: 3% auto;
+
+  .main{
+    margin: auto;
+    width: 700px;
+    height: 450px;
+    background: rgb(0, 247, 255);
     overflow: hidden;
-  }
-
-  .login-text {
-    width: 100%;
-    height: 470px;
     background: #321772;
-    position: absolute;
-    top: -300px;
-    box-sizing: border-box;
-    padding: 6%;
-    transition: all 0.5s ease-in-out;
-    z-index: 11;
+    border-radius: 10px;
   }
-
-  .text {
-    margin-left: 20px;
-    color: #fff;
+  #chk{
     display: none;
-    transition: all 0.5s ease-in-out;
-    transition-delay: 0.3s;
+  }
+  .call-text{
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  h1{
+    text-align: center;
+    color: #fff;
+    font-size: 1.8rem;
   }
 
-  .text a,
-  .text a:visited {
-    font-size: 36px;
+  h2{
+    text-align: center;
+    margin: 5px auto;
+  }
+  label{
     color: #fff;
-    text-decoration: none;
+    font-size: 2.3em;
+    justify-content: center;
+    display: flex;
+    margin: 60px;
     font-weight: bold;
-    display: block;
-  }
-
-  .text hr {
-    width: 10%;
-    float: left;
-    background-color: #fff;
-    font-size: 16px;
-  }
-
-  .text input {
-    margin-top: 30px;
-    height: 40px;
-    width: 300px;
-    border-radius: 2px;
-    border: none;
-    background-color: white;
-    opacity: 1;
-    outline: none;
-    color: #321772;
-    padding-left: 10px;
-  }
-
-  .text input[type=text] {
-    margin-top: 30px;
-  }
-
-  .text button {
-    margin-top: 60px;
-    height: 40px;
-    width: 132px;
-    outline: none;
-  }
-
-  .text .login-btn {
-    background: #fff;
-    border: none;
-    border-radius: 2px;
-    color: #321772;
-  }
-  .text .login-btn:hover {
-   background-color: #4568dc;
-   color: white;
-  }
-
-  .text .signup-btn {
-    background: transparent;
-    border: 2px solid #fff;
-    border-radius: 2px;
-    color: #fff;
-    margin-left: 30px;
-  }
-  .text .signup-btn:hover {
-    background-color: #e427ea;
-  }
-
-  .cta {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #321772;
-    border: 2px solid #fff;
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #fff;
-    outline: none;
     cursor: pointer;
-    z-index: 11;
+    transition: .5s ease-in-out;
   }
-
-  .cta:hover {
+  input{
+    width: 60%;
+    height: 40px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin: 15px auto;
+    padding: 8px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+  }
+  .signup-btn{
+    width: 20%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #fff;
+    background: #e427ea;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: .2s ease-in;
+    cursor: pointer;
+  }
+  .signup-btn:hover{
+    background: #4568dc;
+  }
+  .login-btn{
+    width: 20%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #fff;
+    background: #321772;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: .2s ease-in;
+    cursor: pointer;
+  }
+  .login-btn:hover{
     background: #e427ea;
   }
-
-  .call-text {
-    background-color: #fff;
-    width: 100%;
-    height: 450px;
-    position: absolute;
-    bottom: 0;
-    padding: 10%;
-    box-sizing: border-box;
-    text-align: center;
+  .login-text a{
+    justify-content: space-evenly;
+    display: flex;
+    margin: 20px auto;
+    text-decoration: none;
+    color: #321772;
   }
-
-  .call-text h1 {
-    font-size: 42px;
-    margin-top: 3%;
-    color: #696a86;
+  .login-text a:hover{
+    text-decoration: underline;
   }
-
-  .call-text h1 span {
-    color: #333;
-    font-weight: bolder;
+  .login-text{
+    height: 460px;
+    background: #fff;
+    border-radius: 50% / 10%;
+    transform: translateY(-180px);
+    transition: .8s ease-in-out;
   }
-
-  .call-text button {
-    height: 50px;
-    width: max-content;
-    padding-inline: 20px;
-    border: none;
-    border-radius: 20px;
-    background: #321772;
-    color: #fff;
-    font-weight: bolder;
-    margin-top: 30px;
-    cursor: pointer;
-    outline: none;
+  .login-text label{
+    color: #321772;
+    transform: scale(.6);
   }
-
-  .call-text button:hover {
-    background-color: #e427ea;
+  #chk:checked ~ .login-text{
+    transform: translateY(-500px);
+  }
+  #chk:checked ~ .login-text label{
+    transform: scale(1);
+  }
+  #chk:checked ~ .call-text label{
+    transform: scale(.6);
   }
 
   .clean-block {
-    background: white;
-  }
-
-  .show-hide {
-    display: block;
-  }
-
-  .expand {
-    transform: translateY(300px);
+    background: radial-gradient(ellipse at bottom, #192E47 0%, #030617 100%);
   }
 </style>
 {% endblock styles %}
@@ -177,34 +141,28 @@
 {% block body %}
 <main class="page blog-post ">
   <section class="clean-block clean-post dark navpadding">
-    <div class="container">
-      <div class="block-content">
-        <div class="wrapper">
-          <div class="login-text">
-            <button class="cta"><i class="fas fa-chevron-down fa-1x"></i></button>
-            <div class="text">
-              <a href="">Login</a>
-              <hr>
-              <br>
-              <br>
-              <form method="post">
-                {% csrf_token %}
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <br>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <br>
-                <button class="login-btn" type="submit">Log In</button>
-                <button class="signup-btn" onclick="window.location.href='/authentication/signup'">Sign Up</button>
-              </form>
-            </div>
-          </div>
-          <div class="call-text">
-            <h1>Touch the <i class="fas fa-chevron-down fa-1x"></i> <span>Button</span> to Login </h1>
-            <h1>OR</h1>
-            <button onclick="window.location.href='/authentication/signup'">Join Us Here</button>
-          </div>
+    <div class="main">
+      <input type="checkbox" id="chk" aria-hidden="true">
+      <div class="call-text">
+          <form>
+            {% csrf_token %}
+              <label for="chk" aria-hidden="true">Frustrated Engineer</label>
+              <button class="signup-btn" onclick="window.location.href='/authentication/signup'">Join Us Here</button>
+              <h1>Touch the <i class="fas fa-chevron-up"></i> <span>Button</span> to Login </h1>
+              <h1>OR</h1>
+            </form>
         </div>
-      </div>
+        <div class="login-text">
+            <form>
+
+                <label for="chk" aria-hidden="true"><i class="fas fa-chevron-up"></i></label>
+                <h2 class="description">Login</h2>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <a href="#">Forgot Password?</a>
+                <button class="login-btn" type="submit">Log In</button>
+            </form>
+        </div>
     </div>
   </section>
 </main>
@@ -222,11 +180,11 @@
     text.classList.toggle('show-hide');
     loginText.classList.toggle('expand');
     if (check == 0) {
-      cta.innerHTML = "<i class=\"fas fa-chevron-up\"></i>";
+      cta.innerHTML = "<i class=\"fas fa-chevron-down\"></i>";
       check++;
     }
     else {
-      cta.innerHTML = "<i class=\"fas fa-chevron-down\"></i>";
+      cta.innerHTML = "<i class=\"fas fa-chevron-up\"></i>";
       check = 0;
     }
   })
