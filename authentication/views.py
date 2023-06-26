@@ -200,3 +200,9 @@ def password_reset(request):
     else:
         form = SetPasswordForm(request.user)
     return render(request, 'password_reset.html', {'form': form})
+
+
+# To be Deleted, Only for Developement Purpose
+
+def password_reset_success(request):
+    return render(request, 'password_reset_success.html')

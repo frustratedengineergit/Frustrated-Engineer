@@ -29,7 +29,7 @@ function scrollFunction()
   } 
   else 
   {
-    navbar.style.fontFamily = "Chalkduster";
+    navbar.style.fontFamily = 'Fredericka the Great';
     navbar.style.color = "black";
     navbar.style.removeProperty("box-shadow");
     navbar.classList.add("bg-transparent", "navbar-light");
