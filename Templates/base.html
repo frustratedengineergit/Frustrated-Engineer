@@ -18,17 +18,21 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon_io/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon_io/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'img/favicon_io/site.webmanifest' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Open+Sans:wght@600&display=swap"
+        rel="stylesheet">
     {% block styles %}{% endblock styles %}
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top clean-navbar bg-transparent" id="navbar"
-        style="font-family:Chalkduster;">
+        style="font-family: 'Fredericka the Great', cursive;">
         <div class="container">
             <img id="nav-logo" src="{% static 'img/dark_logo2.0(lighter-shade).png' %}" alt="Logo"
                 style="width: 100px;margin: 0;padding: 0;">
             <a class="navbar-brand logo" href="/">
-                <h4 class="">Frustrated Engineer</h4>
+                <h4 style="font-family: 'Fredericka the Great', cursive; margin: 0;">Frustrated Engineer</h4>
             </a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span
                     class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
