@@ -29,6 +29,7 @@
   }
   
   h1{
+    margin-top: 60px;
     text-align: center;
     color: #fff;
     font-size: 1.8rem;
@@ -111,7 +112,7 @@
     text-decoration: underline;
   }
   .login-text{
-    height: 460px;
+    height: 550px;
     background: #fff;
     border-radius: 50% / 10%;
     transform: translateY(-180px);
@@ -122,7 +123,7 @@
     transform: scale(.6);
   }
   #chk:checked ~ .login-text{
-    transform: translateY(-500px);
+    transform: translateY(-550px);
   }
   #chk:checked ~ .login-text label{
     transform: scale(1);
@@ -144,18 +145,19 @@
     <div class="main">
       <input type="checkbox" id="chk" aria-hidden="true">
       <div class="call-text">
-          <form>
-            {% csrf_token %}
-              <label for="chk" aria-hidden="true">Don't have a account yet?</label>
+          
+            
+              <h1>Don't have a account yet?</h1>
               <button class="signup-btn" onclick="window.location.href='/authentication/signup'">Join Us Here</button>
-              <h1>Touch the <i class="fas fa-chevron-up"></i> <span>Button</span> to Login </h1>
               <h1>OR</h1>
-            </form>
+              <h1>Touch the <i class="fas fa-chevron-up"></i> <span>Button</span> to Login </h1>
+            
         </div>
         <div class="login-text">
-            <form>
+            <form method="post">
+              {% csrf_token %}
 
-                <label for="chk" aria-hidden="true"><i class="fas fa-chevron-up"></i></label>
+                <label for="chk" aria-hidden="true" class="cta"><i class="fas fa-chevron-up"></i></label>
                 <h2 class="description">Login</h2>
                 <input type="text" id="username" name="username" placeholder="Username" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
