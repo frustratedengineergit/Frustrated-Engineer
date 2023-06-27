@@ -13941,8 +13941,8 @@ body {
 
 @media(min-width: 576px) {
     .navbar {
-        padding-top: 1.8rem;
-        padding-bottom: 1.8rem
+        padding-top: 1rem;
+        padding-bottom: 1rem
     }
 
     /* .clean-navbar.fixed-top+.page {

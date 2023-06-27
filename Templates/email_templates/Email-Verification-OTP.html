@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login Page</title>
+    <style>
+        body{
+            background-color: rgb(45, 4, 95);
+            color: white;
+        }
+        .main{
+            text-align: center;
+        }
+        .glass-morph{
+            background-color: rgb(255, 255, 255,0.2);
+            margin: auto;
+            max-width: 700px;
+            border-radius: 15px;
+            padding: 30px;
+            padding-inline: 100px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="main">
+        <h1>Verify Your Email</h1>
+        <div class="glass-morph">
+            <p>Dear,{{ user.first_name }}</p>
+            <p>Thank you for registering with our service. To complete your email verification, please use the following
+                OTP (One-Time Password):</p>
+                <div style="width: 100%; text-align: center; margin-top: 5%;margin-bottom: 5%;">
+                    <span style="font-size: 30px;"> <b>{{ otp }}</b></span>
+                </div>
+            <p>Please enter this OTP on the verification page within the next [Insert Time Limit] minutes. If you did
+                not initiate this registration, please ignore this email. <br><br>
+
+                For security purposes, please do not share this OTP with anyone. Our support team will never ask for
+                your OTP or any other sensitive information. <br><br>
+
+                If you have any questions or need further assistance, please contact our support team at <a
+                    href="mailto:communityfrustratedengineer@gmail.com"></a>. <br><br>
+                Thank you for choosing our service. <br><br>
+
+                Best regards, <br>
+                Frustrated Engineer Community
+            </p>
+        </div>
+    </section>
+</body>
+
+</html>

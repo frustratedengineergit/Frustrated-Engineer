@@ -70,7 +70,6 @@ svg#freepik_stories-programmer.animatedprogrammer #freepik--Device--inject-46 {
         transform: rotate(-1deg);
     }
 }
-
 /* Here Comes Quiz CSS */
 
 svg#freepik_stories-choose:not(.animatedquiz) .animable {
@@ -364,6 +363,9 @@ svg#freepik_stories-choose.animatedquiz #freepik--Character--inject-9--inject-11
     color: #5C62DE;
   }
   @media screen and (max-width: 520px) {
+    #nav-logo{
+        display: none;
+    }
     .screen-body {
       flex-direction: column;
     }
