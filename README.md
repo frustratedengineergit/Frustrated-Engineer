@@ -3,7 +3,30 @@ This is the official website of Frustrated Engineer Community and is currently u
 
 You can View it Live [Here](https://frustratedengineer.vercel.app/)
 
-What resources are included?
+**Getting Started With This Project**
+
+*Step 1 -* Fork this repo<br>
+*Step 2 -* Clone the repo in your System.<br>
+*Step 3 -* Open the repo in VS code and start a terminal in the project directory.
+*Step 4 -* Follow the steps Below:
+
+**Installing Requirements**<br>
+To install Django, you can use the following command:
+
+```pip install -r destination/Requirements.txt```
+
+*Replace ```destination/Requirements.txt``` with the location of ```Requirements.txt``` in the project folder.*
+
+**Running the project**
+
+To run the project, you can use the following command:
+
+```python manage.py runserver```
+
+*This will start a development server on port 8000. You can then open a web browser and navigate to http://localhost:8000 to view your project.*
+
+**What resources are included?**
+
 The resources in this project include:
 1) HTML
 2) CSS
