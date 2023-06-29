@@ -1,3 +1,7 @@
-
 *.pyc
-*.pyc
+.DS_Store
+authentication/.DS_Store
+blogs/.DS_Store
+ContactUs/.DS_Store
+Email_Notice_App/.DS_Store
+Templates/.DS_Store
