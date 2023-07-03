@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "blogs",
     'markdownx',
     'dashboard',
+    'friends',
     'django_otp',
     'django_otp.plugins.otp_totp',
 ]

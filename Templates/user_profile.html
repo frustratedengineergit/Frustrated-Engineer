@@ -1,0 +1,253 @@
+{% extends 'dashboard_base.html' %}
+
+{% block dashboardstyles %}
+<style>
+    .dashboard-container {
+        background-color: #f2f2f2;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: #777;
+        margin-bottom: 20px;
+    }
+
+    .profile-container {
+        background-color: #f2f2f2;
+        padding-top: 150px;
+        padding-inline: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        color: #ffffff;
+        margin-bottom: 160px;
+        height: 100px;
+        font-weight: bolder;
+    }
+    
+    #profile-picture {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+        border: 4px solid #f2f2f2;
+        transition: transform 0.3s;
+        margin-top: 35px;
+    }
+
+    #profile-picture:hover {
+        transform: scale(1.05);
+    }
+
+    #name-uname {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        right: 60px;
+        top: 127px;
+    }
+
+    .left_pc {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #social-links {
+        margin-top: 20px;
+    }
+
+    #social-links a {
+        color: white;
+        text-decoration: none;
+        font-size: x-large;
+        font-weight: bolder;
+        margin-inline: 10px;
+        transition: transform 0.3s;
+    }
+
+    .icon-social-linkedin:hover {
+        transform: scale(2);
+        cursor: pointer;
+    }
+    .posts {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .post {
+        width: calc(33.33% - 20px);
+        background-color: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .post h5 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .post a{
+        text-decoration:none;
+        color:#333;
+
+    }
+
+    .post #post-image {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        object-position: center;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+
+    .post p {
+        margin-bottom: 10px;
+    }
+
+    .friendhandler button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: transparent;
+        color: #fff;
+        border: none;
+        border: white solid 1px;
+
+        position: absolute;
+        right: 60px;
+        top: 265px;
+    }
+
+    .friendhandler button:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.production.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.12.0/umd/react-dom.production.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.1.0/anime.min.js">
+{% endblock dashboardstyles %}
+
+{% block dashboardbody %}
+<div style="padding: 0;margin-bottom: 20px;border: #fff solid 3px; border-radius: 8px;">
+    <div class="profile-container">
+        <div class="left_pc">
+            <img id="profile-picture" src="{{ profile_user.profile_picture_url }}" alt="Profile Picture">
+            <div id="social-links">
+                <a href="{{ profile_user.linkedin_profile }}"><i class="icon-social-linkedin"></i></a>
+                <a href="{{ profile_user.facebook_profile }}"><i class="icon-social-facebook"></i></a>
+                <a href=" {{ profile_user.instagram_profile }}"><i class="icon-social-instagram"></i></a>
+            </div>
+        </div>
+        <div id="name-uname">
+            <strong style="font-size:xx-large;color: #091023;">{{ profile_user.user.first_name }} {{ profile_user.user.last_name }}</strong>
+            <strong>@{{ profile_user.user.username }}</strong>
+        </div>
+        <div class="friendhandler">
+            {% if request.user != profile_user.user %}
+            <form id="friend-request-form" action="{% url 'send_friend_request' receiver_id=profile_user.user.id %}" method="post">
+                {% csrf_token %}
+                <button id="add-friend" type="submit" {% if friend_request_sent %}disabled{% endif %}>
+                    {% if is_friend %}
+                    <i class="fas fa-check"></i> Friends
+                    {% elif friend_request_sent %}
+                    <i class="fas fa-user-clock"></i> Request Sent
+                    {% else %}
+                    <i class="fas fa-user-plus"></i> Add Friend
+                    {% endif %}
+                </button>
+            </form>
+            {% endif %}
+        </div>       
+        
+    </div>
+</div>
+<div class="dashboard-container">
+    <div>
+
+        <strong>Bio:</strong> {{ profile_user.bio }}<br>
+
+    </div>
+</div>
+<div class="dashboard-container">
+    <div>
+        <h1>Blogs</h1>
+        <div class="posts">
+            {% for blog in posts %}
+            {% if profile_user.user.username == blog.author.username %}
+            <!-- Display blogs for the profile user -->
+            <article class="post">
+                <h5><a href="{% url 'blog_post_detail' blog.pk %}">{{ blog.title }}</a></h5>
+                {% if blog.image_url %}
+                <img id="post-image" src="{{ blog.image_url }}" alt="Blog Post Image">
+                {% endif %}
+                <br>
+                <br>
+                <p>{{ blog.content|truncatewords:20 }}</p>
+                <br>
+                <br>
+                <p><b>Author:</b> {{ blog.author.username }}</p><br>
+                <p><b>Categories:</b><br>
+                    {% for category in blog.categories.all %}
+                    {{ category.name }},
+                    {% endfor %}
+                </p><br>
+                <p><b>Tags:</b><br>
+                    {% for tag in blog.tags.all %}
+                    {{ tag.name }},
+                    {% endfor %}
+                </p>
+            </article>
+            {% endif %}
+            {% empty %}
+            <p>Nothing to see here...</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock dashboardbody %}
+
+{% block dashjs %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('friend-request-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+            var button = document.getElementById('add-friend');
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-user-clock"></i> Request Sent';
+
+            // Perform AJAX request to send friend request
+            var url = this.getAttribute('action');
+            fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response, e.g., show success message or update UI
+                    console.log(data);
+                })
+                .catch(error => {
+                    // Handle error case
+                    console.error(error);
+                    button.disabled = false;
+                    button.innerHTML = '<i class="fas fa-user-plus"></i> Add Friend';
+                });
+        });
+    });
+</script>
+{% endblock dashjs %}

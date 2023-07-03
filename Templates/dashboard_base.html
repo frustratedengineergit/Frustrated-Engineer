@@ -5,348 +5,809 @@
 {% block dashboardstyles %}{% endblock dashboardstyles %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <style>
-    /* Sidebar */
-    .sidebar {
-        width: 250px;
-        height: 100%;
-        position: fixed;
-        top: 90px;
-        left: 0;
-        background-color: #ffffff;
-        padding: 20px;
-        overflow-y: auto;
-        margin: 0;
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    background-color: #ffffff;
+    padding: 20px;
+    overflow-y: auto;
+    margin: 0;
 
-    }
+  }
 
-    .sidebar1 {
-        background: transparent;
-    }
+  .sidebar1 {
+    background: transparent;
+  }
 
-    .sidebar.collapsed {
-        width: 90px;
-    }
+  .sidebar.collapsed {
+    width: 90px;
+  }
 
-    .sidebar.collapsed .sidebar-item {
-        transform: scale(1.5);
-        text-align: center;
-        margin-bottom: 30px;
-        margin-left: 20px;
-    }
+  .sidebar.collapsed .sidebar-item {
+    transform: scale(1.5);
+    text-align: center;
+    margin-bottom: 30px;
+    margin-left: 20px;
+  }
 
-    .sidebar.collapsed .sidebar-item:hover {
-        transform: scale(2);
-    }
+  .sidebar.collapsed .sidebar-item:hover {
+    transform: scale(2);
+  }
 
-    .sidebar .sidebar-icon {
-        margin-bottom: 10px;
-    }
+  .sidebar .sidebar-icon {
+    margin-bottom: 10px;
+  }
 
-    .sidebar .sidebar-item {
-        margin-bottom: 15px;
-    }
+  .sidebar .sidebar-item {
+    margin-bottom: 15px;
+  }
 
-    .sidebar .sidebar-item a {
-        display: flex;
-        align-items: center;
-        color: #333;
-        text-decoration: none;
-    }
+  .sidebar .sidebar-item a {
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+  }
 
-    .sidebar .sidebar-item .sidebar-text {
-        margin-left: 10px;
-    }
+  .sidebar .sidebar-item .sidebar-text {
+    margin-left: 10px;
+  }
 
-    .contentdashboard {
-        margin-left: 250px;
-        /* Adjust this value based on the sidebar width */
-        padding: 20px;
-        transition: all 0.3s ease;
-        text-align: left;
-    }
+  .contentdashboard {
+    margin-left: 250px;
+    /* Adjust this value based on the sidebar width */
+    padding: 20px;
+    transition: all 0.3s ease;
+    text-align: left;
+  }
 
-    .sidebar.collapsed~.contentdashboard {
-        margin-left: 60px;
-    }
+  .sidebar.collapsed~.contentdashboard {
+    margin-left: 60px;
+  }
 
-    .toggle-sidebar {
-        position: fixed;
-        top: 120px;
-        left: 20px;
-        font-size: 24px;
-        color: #333;
-        cursor: pointer;
-        z-index: 999;
-    }
-    .clean-block {
-        padding-bottom: 0;
-    }
+  .toggle-sidebar {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    z-index: 999;
+  }
 
-    .page-footer {
-        position: sticky;
-        width: 100%;
-    }
+  .clean-block {
+    padding-bottom: 0;
+  }
 
-    .bg-new {
-        background: linear-gradient(to top, #192E47 0%, #030617 92%);
-    }
+  .page-footer {
+    position: sticky;
+    width: 100%;
+  }
 
-    .sidebar.collapsed .sidebar-text {
-        display: none;
-    }
+  .bg-new {
+    background: linear-gradient(to top, #192E47 0%, #030617 92%);
+  }
 
-    #sky {
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-        z-index: 0;
-    }
+  .sidebar.collapsed .sidebar-text {
+    display: none;
+  }
 
-    #shootingstars {
-        margin: 0;
-        padding: 0;
-        width: 150vh;
-        height: 100vw;
-        position: fixed;
-        overflow: hidden;
-        transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%)) rotate(120deg);
-    }
+  #sky {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    z-index: 0;
+  }
 
-    .wish {
-        height: 2px;
-        top: 300px;
-        width: 100px;
-        margin: 0;
-        opacity: 0;
-        padding: 0;
-        background-color: white;
-        position: absolute;
-        background: linear-gradient(-45deg, white, rgba(0, 0, 255, 0));
-        filter: drop-shadow(0 0 6px white);
-        overflow: hidden;
-    }
-    .contentdashboard{
-        position: relative;
-    }
+  #shootingstars {
+    margin: 0;
+    padding: 0;
+    width: 150vh;
+    height: 100vw;
+    position: fixed;
+    overflow: hidden;
+    transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%)) rotate(120deg);
+  }
+
+  .wish {
+    height: 2px;
+    top: 300px;
+    width: 100px;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    background-color: white;
+    position: absolute;
+    background: linear-gradient(-45deg, white, rgba(0, 0, 255, 0));
+    filter: drop-shadow(0 0 6px white);
+    overflow: hidden;
+  }
+
+  .contentdashboard {
+    position: relative;
+  }
+
+  .sidebarfriends {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 90px;
+    left: 91px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    overflow-y: auto;
+    margin: 0;
+  }
+
+  .sidebarfriends.collapsed {
+    display: none;
+  }
+
+  .sidebarfriends.collapsed .sidebar-item {
+    transform: scale(1.5);
+    text-align: center;
+    margin-bottom: 30px;
+    margin-right: 20px;
+  }
+
+  .sidebarfriends.collapsed .sidebar-item:hover {
+    transform: scale(2);
+  }
+
+  .sidebarfriends .sidebar-icon {
+    margin-bottom: 10px;
+  }
+
+  .sidebarfriends .sidebar-item {
+    margin-bottom: 15px;
+  }
+
+  .sidebarfriends .sidebar-item a {
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+  }
+  a:not([href]):not([class]):hover{
+    color: #333!important;
+  }
+  .sidebarfriends .sidebar-item .sidebar-text {
+    margin-left: 10px;
+  }
+
+  .sidebarfriends.collapsed~.contentdashboard {
+    margin-right: 60px;
+  }
+
+  .sidebarfriends.collapsed .sidebar-text {
+    display: none;
+  }
+
+  /* CSS for the search bar */
+  .search-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .search-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 200px;
+    background-color: transparent;
+    color: white;
+  }
+
+  .search-button {
+    margin-left: 5px;
+    padding: 8px 11px;
+    background-color: transparent;
+    border: white solid 1px;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .search-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* CSS for the search results */
+  .search-results {
+    margin-top: 10px;
+  }
+
+  .user-tiles {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .user-tile {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .user-tile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .user-tile p {
+    margin: 0;
+    font-size: small;
+    color: #333;
+  }
+
+  .user-tile a {
+    text-decoration: none;
+  }
+
+  .user-tile a:hover {
+    font-weight: 600;
+  }
+
+  .friend-request {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .friend-request img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .friend-request p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .friend-request a {
+    text-decoration: none;
+  }
+
+  .friend-request a:hover {
+    font-weight: 600;
+  }
+
+  .no-requests-message {
+    font-style: italic;
+    color: #888;
+    font-size: 12px;
+  }
+
+  .friend-request .accept-button {
+    margin: 0;
+    background-color: transparent;
+    color: #333;
+    border: none;
+    padding: 0;
+    padding-left: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .accept-button:hover {
+    transform: scale(1.2);
+  }
+
+  .accept-button.clicked {
+    transform: scale(1.5);
+  }
+
+  .friend-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 50vh;
+  }
+
+  .friend-tile {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .friend-tile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .friend-tile p {
+    margin: 0;
+    font-size: small;
+    color: #333;
+  }
+
+  .friend-tile a {
+    text-decoration: none;
+  }
+
+  .friend-tile a:hover {
+    font-weight: 600;
+  }
 </style>
-<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.12.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.1.0/anime.min.js"></script>
 
 {% endblock styles %}
 
 {% block body %}
 <main class="page gallery-page">
-    <section class="clean-block bg-new text-white navpadding" style="display: flex;">
-        <div id="root" /></div>
-        <div class="sidebar" id="sidebar">
-            <br>
-            <br>
-            <br>
+  <section class="clean-block bg-new text-white navpadding" style="display: flex;">
+    <div id="root" />
+    </div>
+    <div class="sidebar" id="sidebar">
+      <br>
+      <br>
+      <br>
+      <div class="toggle-sidebar" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="sidebar-item">
+        <a href="/">
+          <i class="fas fa-home"></i>
+          <span class="sidebar-text">Home</span>
+        </a>
+      </div>
+      <div class="sidebar-item">
+        <a href="{% url 'dashboard' %}">
+          <i class="fas fa-chart-bar"></i>
+          <span class="sidebar-text">User Profile</span>
+        </a>
+      </div>
+      <div class="sidebar-item">
+        <a href="{% url 'update_user' %}">
+          <i class="fas fa-user"></i>
+          <span class="sidebar-text">Update User</span>
+        </a>
+      </div>
+      <div class="sidebar-item">
+        <a href="{% url 'change_password' %}">
+          <i class="fas fa-key"></i>
+          <span class="sidebar-text">Change Password</span>
+        </a>
+      </div>
+      <div class="sidebar-item">
+        <a onclick="SidebarFriends()">
+          <i class="fas fa-user-friends"></i>
+          <span class="sidebar-text">Friends</span>
+        </a>
+      </div>
 
-            <div class="sidebar-item">
-                <a href="/">
-                    <i class="fas fa-home"></i>
-                    <span class="sidebar-text">Home</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a href="{% url 'dashboard' %}">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="sidebar-text">User Profile</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a href="{% url 'update_user' %}">
-                    <i class="fas fa-user"></i>
-                    <span class="sidebar-text">Update User</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a href="{% url 'change_password' %}">
-                    <i class="fas fa-key"></i>
-                    <span class="sidebar-text">Change Password</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a href="{% url 'blog_posts' %}">
-                    <i class="fas fa-laptop-code"></i>
-                    <span class="sidebar-text">Blogs</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a href="/logout">
-                    <i class="fas icon-logout"></i>
-                    <span class="sidebar-text">Logout</span>
-                </a>
-            </div>
+      <div class="sidebar-item">
+        <a href="{% url 'blog_posts' %}">
+          <i class="fas fa-laptop-code"></i>
+          <span class="sidebar-text">Blogs</span>
+        </a>
+      </div>
+      <div class="sidebar-item">
+        <a href="/logout">
+          <i class="fas icon-logout"></i>
+          <span class="sidebar-text">Logout</span>
+        </a>
+      </div>
+    </div>
+    <div class="sidebarfriends collapsed" id="sidebarfriends">
+      <form id="search-form" class="search-form">
+        {% csrf_token %}
+        <input type="text" id="search-input" name="query" class="search-input" placeholder="Search friends">
+        <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
+      </form>
+
+      <div id="search-results" class="search-results">
+        <div class="user-tiles"></div>
+      </div>
+      <hr>
+      <h6>Friend Requests :</h6>
+      <div id="friendRequestsContainer">
+        {% if friend_requests %}
+        {% for request in friend_requests %}
+        <div class="friend-request">
+          <img src="${request.sender_profile_image}" alt="Profile Image">
+          <a href="/dashboard/users/profile/${request.sender_user_id}/">
+            <p>${request.sender_name}</p>
+            <button class="accept-button" onclick="acceptFriendRequest('{{ request.id }}')"><i
+                class="fas fa-user-plus"></i></button>
         </div>
-        <div class="container">
-            <div class="block-heading">
-                <div class="toggle-sidebar" onclick="toggleSidebar()">
-                    <i class="fas fa-bars"></i>
-                </div>
-                <div class="contentdashboard">
-                    {% block dashboardbody %}
-                    {% endblock dashboardbody %}
-                </div>
-            </div>
+        {% endfor %}
+        {% else %}
+        <p class="no-requests-message">No friend requests at the moment.</p>
+        {% endif %}
+      </div>
+      <hr>
+      <div>
+        <h6>Friends:</h6>
+        <div id="friend-tiles" class="friend-tiles"></div>
+      </div>
+      
+    </div>
+    <div class="container">
+      <div class="block-heading">
+        <div class="contentdashboard">
+          {% block dashboardbody %}
+          {% endblock dashboardbody %}
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </main>
 {% endblock body %}
 
 {% block javascript %}
 <script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const toggleSidebar = document.querySelector('.toggle-sidebar');
-        sidebar.classList.toggle('collapsed');
-        if (sidebar.classList.contains('collapsed')) {
-            // Sidebar is collapsed
-            toggleSidebar.style.left = '35px'; // Adjust the desired property
-        } else {
-            // Sidebar is expanded
-            toggleSidebar.style.left = '20px'; // Adjust the desired property
-        }
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebar = document.querySelector('.toggle-sidebar');
+    sidebar.classList.toggle('collapsed');
+    if (sidebar.classList.contains('collapsed')) {
+      // Sidebar is collapsed
+      toggleSidebar.style.left = '35px'; // Adjust the desired property
+    } else {
+      // Sidebar is expanded
+      toggleSidebar.style.left = '20px'; // Adjust the desired property
+      hideSidebarFriends();
     }
+  }
 
-    window.addEventListener('scroll', function () {
-        var sidebar = document.getElementById('sidebar');
-        var toggleSidebar = document.querySelector('.toggle-sidebar');
-        var sidebarItems = sidebar.querySelectorAll('.sidebar-item a');
-        var distance = 10; // Change this value to adjust the scrolling distance
+  function SidebarFriends() {
+    const sidebarFriends = document.getElementById('sidebarfriends');
+    if (sidebarFriends.classList.contains('collapsed')) {
+      showSidebarFriends();
+    } else {
+      hideSidebarFriends();
+      toggleSidebar();
+    }
+  }
 
-        if (document.body.scrollTop > distance || document.documentElement.scrollTop > distance) {
-            sidebar.classList.add('sidebar1');
-            updateSidebarItemsColor('#fff', sidebarItems);
-            toggleSidebar.style.color = '#fff';
-        } else {
-            sidebar.classList.remove('sidebar1');
-            updateSidebarItemsColor('#333', sidebarItems);
-            toggleSidebar.style.color = '#333';
-        }
+  function showSidebarFriends() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarFriends = document.getElementById('sidebarfriends');
+    const toggleSidebar = document.querySelector('.toggle-sidebar');
+
+    sidebar.classList.add('collapsed');
+    sidebarFriends.classList.remove('collapsed');
+    toggleSidebar.style.left = '35px'; // Adjust the desired property
+  }
+
+
+  function hideSidebarFriends() {
+    const sidebarFriends = document.getElementById('sidebarfriends');
+    sidebarFriends.classList.add('collapsed');
+  }
+
+  window.addEventListener('scroll', function () {
+    var sidebar = document.getElementById('sidebar');
+    var toggleSidebar = document.querySelector('.toggle-sidebar');
+    var sidebarItems = sidebar.querySelectorAll('.sidebar-item a');
+    var distance = 10; // Change this value to adjust the scrolling distance
+
+    if (document.body.scrollTop > distance || document.documentElement.scrollTop > distance) {
+      sidebar.classList.add('sidebar1');
+      updateSidebarItemsColor('#fff', sidebarItems);
+      toggleSidebar.style.color = '#fff';
+    } else {
+      sidebar.classList.remove('sidebar1');
+      updateSidebarItemsColor('#333', sidebarItems);
+      toggleSidebar.style.color = '#333';
+    }
+  });
+  function updateSidebarItemsColor(color, items) {
+    items.forEach(function (item) {
+      item.style.color = color;
     });
-    function updateSidebarItemsColor(color, items) {
-        items.forEach(function (item) {
-            item.style.color = color;
-        });
-    }
+  }
+
 </script>
 <script>
-    // Twinkling Night Sky by Sharna
+  // Twinkling Night Sky by Sharna
 
-class StarrySky extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      num: 60,
-      vw: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-      vh: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-    };
-  }
+  class StarrySky extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        num: 60,
+        vw: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+        vh: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+      };
+    }
 
-  starryNight() {
-    anime({
-      targets: ["#sky .star"],
-      opacity: [
-        {
-          duration: 700,
-          value: "0"
-        },
-        {
-          duration: 700,
-          value: "1"
-        }
-      ],
-      easing: "linear",
-      loop: true,
-      delay: (el, i) => 50 * i
-    });
-  }
+    starryNight() {
+      anime({
+        targets: ["#sky .star"],
+        opacity: [
+          {
+            duration: 700,
+            value: "0"
+          },
+          {
+            duration: 700,
+            value: "1"
+          }
+        ],
+        easing: "linear",
+        loop: true,
+        delay: (el, i) => 50 * i
+      });
+    }
 
-  shootingStars() {
-    anime({
-      targets: ["#shootingstars .wish"],
-      easing: "linear",
-      loop: true,
-      delay: (el, i) => 1000 * i,
-      opacity: [
-        {
-          duration: 700,
-          value: "1"
-        }
-      ],
-      width: [
-        {
-          value: "150px"
-        },
-        {
-          value: "0px"
-        }
-      ],
-      translateX: 350
-    });
-  }
+    shootingStars() {
+      anime({
+        targets: ["#shootingstars .wish"],
+        easing: "linear",
+        loop: true,
+        delay: (el, i) => 1000 * i,
+        opacity: [
+          {
+            duration: 700,
+            value: "1"
+          }
+        ],
+        width: [
+          {
+            value: "150px"
+          },
+          {
+            value: "0px"
+          }
+        ],
+        translateX: 350
+      });
+    }
 
-  randomRadius() {
-    return Math.random() * 0.7 + 0.6;
-  }
+    randomRadius() {
+      return Math.random() * 0.7 + 0.6;
+    }
 
-  getRandomX() {
-    return Math.floor(Math.random() * Math.floor(this.state.vw)).toString();
-  }
+    getRandomX() {
+      return Math.floor(Math.random() * Math.floor(this.state.vw)).toString();
+    }
 
-  getRandomY() {
-    return Math.floor(Math.random() * Math.floor(this.state.vh)).toString();
-  }
+    getRandomY() {
+      return Math.floor(Math.random() * Math.floor(this.state.vh)).toString();
+    }
 
-  componentDidMount() {
-    this.starryNight();
-    this.shootingStars();
-  }
+    componentDidMount() {
+      this.starryNight();
+      this.shootingStars();
+    }
 
-  render() {
-    const { num } = this.state;
-    return (
-      React.createElement("div", { id: "App" },
-        React.createElement("svg", { id: "sky" },
-          [...Array(num)].map((x, y) =>
-            React.createElement("circle", {
-              cx: this.getRandomX(),
-              cy: this.getRandomY(),
-              r: this.randomRadius(),
-              stroke: "none",
-              strokeWidth: "0",
-              fill: "white",
-              key: y,
-              className: "star"
-            })
-          )
-        ),
-        React.createElement("div", { id: "shootingstars" },
-          [...Array(60)].map((x, y) =>
-            React.createElement("div", {
-              key: y,
-              className: "wish",
-              style: {
-                left: `${this.getRandomY()}px`,
-                top: `${this.getRandomX()}px`
-              }
-            })
+    render() {
+      const { num } = this.state;
+      return (
+        React.createElement("div", { id: "App" },
+          React.createElement("svg", { id: "sky" },
+            [...Array(num)].map((x, y) =>
+              React.createElement("circle", {
+                cx: this.getRandomX(),
+                cy: this.getRandomY(),
+                r: this.randomRadius(),
+                stroke: "none",
+                strokeWidth: "0",
+                fill: "white",
+                key: y,
+                className: "star"
+              })
+            )
+          ),
+          React.createElement("div", { id: "shootingstars" },
+            [...Array(60)].map((x, y) =>
+              React.createElement("div", {
+                key: y,
+                className: "wish",
+                style: {
+                  left: `${this.getRandomY()}px`,
+                  top: `${this.getRandomX()}px`
+                }
+              })
+            )
           )
         )
-      )
-    );
+      );
+    }
   }
-}
 
-ReactDOM.render(React.createElement(StarrySky, null), document.getElementById("root"));
+  ReactDOM.render(React.createElement(StarrySky, null), document.getElementById("root"));
 
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#search-form').on('submit', function (event) {
+      event.preventDefault();
+      var query = $('#search-input').val();
+
+      $.ajax({
+        type: 'GET',
+        url: '{% url "search_users" %}',
+        data: { query: query },
+        dataType: 'json',
+        success: function (data) {
+          var resultsHtml = '';
+
+          if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+              var user = data[i];
+              var userTileHtml = '<div class="user-tile">' +
+                '<img src="' + user.profile_image + '" alt="Profile Image">' +
+                '<a href="/dashboard/users/profile/' + user.user_id + '/">' +
+                '<p>' + user.name + '</p>' +
+                '</a>' +
+                '</div>';
+              resultsHtml += userTileHtml;
+            }
+          } else {
+            resultsHtml = '<p>No results found.</p>';
+          }
+
+          $('.user-tiles').html(resultsHtml);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          console.log('Error:', textStatus, errorThrown);
+        }
+      });
+    });
+  });
+</script>
+<script>
+  function renderFriendRequests() {
+    var friendRequestsContainer = document.getElementById('friendRequestsContainer');
+
+    function updateFriendRequests() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/dashboard/users/received_friend_requests/', true);
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var friendRequests = JSON.parse(xhr.responseText);
+          friendRequestsContainer.innerHTML = '';
+
+          if (friendRequests.length === 0) {
+            var noRequestsMessage = document.createElement('p');
+            noRequestsMessage.className = 'no-requests-message';
+            noRequestsMessage.textContent = 'No friend requests at the moment.';
+            friendRequestsContainer.appendChild(noRequestsMessage);
+          } else {
+            friendRequests.forEach(function (request) {
+              var requestElement = document.createElement('div');
+              requestElement.className = 'friend-request';
+              requestElement.innerHTML = `
+                <img src="${request.sender_profile_image}" alt="Profile Image">
+                <a href="/dashboard/users/profile/${request.sender_user_id}/">
+                <p>${request.sender_name}</p>
+                </a>
+                <button class="accept-button" onclick="acceptFriendRequest('${ request.friend_request_id }')"><i class="fas fa-user-plus"></i></button>
+                
+              `;
+              friendRequestsContainer.appendChild(requestElement);
+            });
+          }
+        }
+      };
+
+      xhr.send();
+    }
+
+    updateFriendRequests();
+    setInterval(updateFriendRequests, 10000); // Update every 10 seconds
+  }
+
+  function acceptFriendRequest(friendRequestId) {
+  var csrftoken = getCookie('csrftoken');
+
+  $.ajax({
+    url: '/dashboard/users/accept_request/' + friendRequestId + '/',
+    type: 'POST',
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('X-CSRFToken', csrftoken);
+    },
+    success: function(response) {
+      console.log('Friend request accepted successfully.');
+
+      // Add animation to the button
+      var button = document.querySelector('.accept-button');
+      button.classList.add('clicked');
+
+      // Remove the 'clicked' class after a delay to reset the animation
+      setTimeout(function() {
+        button.classList.remove('clicked');
+      }, 300); // Adjust the delay (in milliseconds) as per your preference
+    },
+    error: function(xhr, errmsg, err) {
+      console.log('Error accepting friend request.');
+    }
+  });
+}
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + '=') {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+
+
+  window.addEventListener('DOMContentLoaded', function () {
+    renderFriendRequests();
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    // Function to retrieve connected_users information using AJAX
+    function getConnectedUsers() {
+      $.ajax({
+        url: '/dashboard/users/connected-users/',  // Replace with the appropriate URL
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          // Update the content on dashboard_base.html
+          var friendTiles = '';
+          for (var i = 0; i < data.length; i++) {
+            friendTiles += '<div class="friend-tile">';
+            friendTiles += '<img src="' + data[i].profile_picture_url + '" alt="' + data[i].first_name + ' profile picture">';
+            friendTiles += '<a href="/dashboard/users/profile/' + data[i].user_id + '/"><p>' + data[i].first_name + ' ' + data[i].last_name + '</p></a>';
+            friendTiles += '</div>';
+          }
+          $('#friend-tiles').html(friendTiles);
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+  
+    // Call the getConnectedUsers function when the page loads
+    getConnectedUsers();
+    setInterval(getConnectedUsers, 10000);
+  });
+  </script>
+
 {% block dashjs %}
 {% endblock dashjs %}
 {% endblock javascript %}
