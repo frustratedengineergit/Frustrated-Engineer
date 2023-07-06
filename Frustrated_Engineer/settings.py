@@ -223,15 +223,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Channels Layers
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [os.environ.get("REDIS_URL", "redis://default:f2f87e23b8ff4abbbb634419bedc51cb@dominant-viper-42080.upstash.io:42080")],
         },
     },
 }
+
 
 
 CHANNELS_ROUTING = 'routing.websocket_urlpatterns'
