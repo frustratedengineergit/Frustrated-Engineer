@@ -9,3 +9,8 @@ django-markdownx
 firebase-admin
 django-otp
 pyotp
+channels==4.0.0
+channels-redis==4.1.0
+redis==4.6.0
+asgiref==3.7.2
+daphne

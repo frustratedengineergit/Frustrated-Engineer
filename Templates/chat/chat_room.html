@@ -1,0 +1,211 @@
+{% extends 'dashboard_base.html' %}
+
+{% block dashboardstyles %}
+<style>
+    .message-container {
+        display: flex;
+        width: fit-content;
+        margin-bottom: 10px;
+        padding: 10px;
+        
+    }
+
+    .sender-message {
+        /* margin: 20px; */
+        margin-left: auto;
+        background-color: white;
+        color: #5C62DE;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    
+    .receiver-message {
+        /* margin: 20px; */
+        margin-right: auto;
+        background-color: white;
+        color: #D730E9;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    #chat-messages {
+        height: 60vh;
+        max-height: 60vh;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        overflow-y: scroll;
+        font-weight: bold;
+        border-top-left-radius: 13px;
+        border-top-right-radius: 13px;
+    }
+    
+    #chat-form {
+        display: flex;
+    }
+
+    #message-input {
+        width: 90%;
+        border: none;
+        padding: 10px;
+        margin: 0;
+        background-color: white;
+        border: white 1px solid;
+        color: #5C62DE;
+        font-weight: bold;
+        border-bottom-left-radius: 13px;
+    }
+    #message-input:focus-visible{
+        background-color: transparent;
+        outline: none;
+        color: white;
+    }
+    
+    #send-button {
+        width: 10%;
+        border: none;
+        padding: 10px;
+        margin: 0;
+        background-color: white;
+        border: white solid 1px;
+        color: #5C62DE;
+        font-weight: bold;
+        border-bottom-right-radius: 13px;
+    }
+    #send-button:hover{
+        background-color: transparent;
+        color: white;
+    }
+    .profile_picture img{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        margin-inline: 10px;
+        object-fit: cover;
+        object-position: center;
+    }
+    .chats{
+        display: flex;
+    }
+</style>
+{% endblock dashboardstyles %}
+
+{% block dashboardbody %}
+
+<div id="chat-messages">
+    {% for message in messages %}
+    <div class="chats">
+    {% if message.sender.username == request.user.username %}     
+        <div class="message-container sender-message">
+            <p>{{ message.message }}</p>
+        </div>
+        <div class="profile_picture"><img src="{{sender_profile.profile_picture_url}}" alt="{{sender_profile.user.first_name}}"></div>
+    {% else %}
+        <div class="profile_picture"><img src="{{receiver_profile.profile_picture_url}}" alt="{{receiver_profile.user.first_name}}"></div>
+        <div class="message-container receiver-message">
+            <p>{{ message.message }}</p>
+        </div>  
+    {% endif %}    
+    </div>
+    {% endfor %}
+    <!-- Messages will be displayed here -->
+</div>
+
+<form id="chat-form" method="POST">
+    {% csrf_token %}
+    <input type="text" id="message-input" name="message" placeholder="Type your message">
+    <button id="send-button" type="submit">Send</button>
+</form>
+{% endblock dashboardbody %}
+
+{% block dashjs %}
+<script>
+    // WebSocket connection
+    const roomName = "{{ room_name }}"; // Pass the room name from the view
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/dashboard/ws/chat/' + roomName + '/');
+
+    chatSocket.onopen = function (event) {
+        console.log('WebSocket connection established.');
+    };
+
+    chatSocket.onmessage = function (event) {
+        const message = JSON.parse(event.data);
+        const chatMessages = document.getElementById('chat-messages');
+
+        // Create a container for the message
+        const messageContainer = document.createElement('div');
+        messageContainer.classList.add('chats');
+
+        // Create a profile picture element
+        const profilePicture = document.createElement('div');
+        profilePicture.classList.add('profile_picture');
+
+        // Create an image element for the profile picture
+        const imageElement = document.createElement('img');
+        imageElement.src = message.sender === "{{ request.user.username }}" ? "{{sender_profile.profile_picture_url}}" : "{{receiver_profile.profile_picture_url}}";
+        imageElement.alt = message.sender === "{{ request.user.username }}" ? "{{sender_profile.user.first_name}}" : "{{receiver_profile.user.first_name}}";
+
+        // Append the image element to the profile picture container
+        profilePicture.appendChild(imageElement);
+
+        // Create a message element
+        const messageElement = document.createElement('div');
+        messageElement.classList.add(message.sender === "{{ request.user.username }}" ? 'sender-message' : 'receiver-message');
+        const messageText = document.createElement('p');
+        messageText.innerText = message.content;
+        messageElement.appendChild(messageText);
+
+        // Append the message element to the container
+        messageContainer.appendChild(messageElement);
+
+        // Determine the order of appending the profile picture and message container based on the sender
+        if (message.sender === "{{ request.user.username }}") {
+            messageContainer.appendChild(profilePicture);
+        } else {
+            messageContainer.insertBefore(profilePicture, messageElement);
+        }
+
+        // Append the container to the chat messages
+        chatMessages.appendChild(messageContainer);
+
+        // Scroll to the bottom
+        scrollToBottom();
+    };
+
+    chatSocket.onclose = function (event) {
+        console.log('WebSocket connection closed.');
+    };
+
+    // Send a message
+    const chatForm = document.getElementById('chat-form');
+    const messageInput = document.getElementById('message-input');
+
+    chatForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        const message = messageInput.value;
+
+        if (message.trim() !== '') {
+            // Send the message to the server
+            chatSocket.send(JSON.stringify({
+                'command': 'send',
+                'message': message,
+                'from': "{{ request.user.username }}",
+                'room_name': roomName
+            }));
+
+            // Clear the input field
+            messageInput.value = '';
+        }
+    });
+
+    // Function to scroll to the bottom of the messages
+    function scrollToBottom() {
+        let objDiv = document.getElementById("chat-messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    scrollToBottom();
+</script>
+{% endblock dashjs %}
+

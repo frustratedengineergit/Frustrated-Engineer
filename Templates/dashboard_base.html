@@ -175,9 +175,6 @@
     color: #333;
     text-decoration: none;
   }
-  a:not([href]):not([class]):hover{
-    color: #333!important;
-  }
   .sidebarfriends .sidebar-item .sidebar-text {
     margin-left: 10px;
   }
@@ -304,7 +301,7 @@
     font-size: 12px;
   }
 
-  .friend-request .accept-button {
+   .sidebar-button {
     margin: 0;
     background-color: transparent;
     color: #333;
@@ -315,11 +312,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
   }
-  .accept-button:hover {
+  .sidebar-button:hover {
     transform: scale(1.2);
   }
 
-  .accept-button.clicked {
+  .sidebar-button.clicked {
     transform: scale(1.5);
   }
 
@@ -405,7 +402,7 @@
         </a>
       </div>
       <div class="sidebar-item">
-        <a onclick="SidebarFriends()">
+        <a href="#" onclick="SidebarFriends()">
           <i class="fas fa-user-friends"></i>
           <span class="sidebar-text">Friends</span>
         </a>
@@ -443,7 +440,7 @@
           <img src="${request.sender_profile_image}" alt="Profile Image">
           <a href="/dashboard/users/profile/${request.sender_user_id}/">
             <p>${request.sender_name}</p>
-            <button class="accept-button" onclick="acceptFriendRequest('{{ request.id }}')"><i
+            <button class="sidebar-button" onclick="acceptFriendRequest('{{ request.id }}')"><i
                 class="fas fa-user-plus"></i></button>
         </div>
         {% endfor %}
@@ -713,7 +710,7 @@
                 <a href="/dashboard/users/profile/${request.sender_user_id}/">
                 <p>${request.sender_name}</p>
                 </a>
-                <button class="accept-button" onclick="acceptFriendRequest('${ request.friend_request_id }')"><i class="fas fa-user-plus"></i></button>
+                <button class="sidebar-button" onclick="acceptFriendRequest('${ request.friend_request_id }')"><i class="fas fa-user-plus"></i></button>
                 
               `;
               friendRequestsContainer.appendChild(requestElement);
@@ -742,7 +739,7 @@
       console.log('Friend request accepted successfully.');
 
       // Add animation to the button
-      var button = document.querySelector('.accept-button');
+      var button = document.querySelector('.sidebar-button');
       button.classList.add('clicked');
 
       // Remove the 'clicked' class after a delay to reset the animation
@@ -792,8 +789,10 @@ function getCookie(name) {
             friendTiles += '<div class="friend-tile">';
             friendTiles += '<img src="' + data[i].profile_picture_url + '" alt="' + data[i].first_name + ' profile picture">';
             friendTiles += '<a href="/dashboard/users/profile/' + data[i].user_id + '/"><p>' + data[i].first_name + ' ' + data[i].last_name + '</p></a>';
+            friendTiles += '<button class="sidebar-button" onclick="startChat(\'' + data[i].username + '\')"><i class="fas fa-comment-dots"></i></button>';
             friendTiles += '</div>';
           }
+
           $('#friend-tiles').html(friendTiles);
         },
         error: function(xhr, status, error) {
@@ -806,7 +805,24 @@ function getCookie(name) {
     getConnectedUsers();
     setInterval(getConnectedUsers, 10000);
   });
-  </script>
+
+  // Function to start a chat with the given username
+  function startChat(username) {
+    // Generate the room_name using user.username and username
+    var roomName = generateRoomName('{{ request.user.username }}', username);
+
+    // Redirect to the chat page with the generated room_name
+    window.location.href = '/dashboard/chat/' + roomName + '/';
+  }
+
+  // Function to generate the room_name
+  function generateRoomName(user1, user2) {
+    var usernames = [user1, user2].sort();
+    var roomName = usernames[0] + '@' + usernames[1];
+    return roomName;
+  }
+</script>
+
 
 {% block dashjs %}
 {% endblock dashjs %}

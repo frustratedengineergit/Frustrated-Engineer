@@ -49,6 +49,7 @@ def connected_users_json(request):
             'first_name': friend.user.first_name,
             'last_name': friend.user.last_name,
             'user_id': friend.user.id,
+            'username': friend.user.username
         }
         users_data.append(user_data)
 

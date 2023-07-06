@@ -46,6 +46,7 @@ EMAIL_HOST_PASSWORD = 'jxndesyaoqpdcpni'
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -64,8 +65,11 @@ INSTALLED_APPS = [
     'markdownx',
     'dashboard',
     'friends',
+    'chat',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'channels',
+    'channels_redis',
 ]
 
 MIDDLEWARE = [
@@ -98,6 +102,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Frustrated_Engineer.wsgi.application"
+ASGI_APPLICATION = 'Frustrated_Engineer.asgi.application'
+
 # import importlib
 
 # try:
@@ -216,3 +222,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Channels Layers
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
+
+CHANNELS_ROUTING = 'routing.websocket_urlpatterns'
