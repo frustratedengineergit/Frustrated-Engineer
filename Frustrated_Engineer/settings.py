@@ -235,3 +235,5 @@ CHANNEL_LAYERS = {
 
 
 CHANNELS_ROUTING = 'routing.websocket_urlpatterns'
+
+CSRF_TRUSTED_ORIGINS = ['frustrated-engineer.onrender.com']
