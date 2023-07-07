@@ -122,7 +122,7 @@
     // WebSocket connection
     const roomName = "{{ room_name }}"; // Pass the room name from the view
     const chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/dashboard/ws/chat/' + roomName + '/');
+        'wss://' + window.location.host + '/dashboard/ws/chat/' + roomName + '/');
 
     chatSocket.onopen = function (event) {
         console.log('WebSocket connection established.');
