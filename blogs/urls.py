@@ -1,5 +1,5 @@
-from django.urls import include, path
-from froala_editor import views
+from django.urls import path
+
 from .views import (
     BlogPostCreateView,
     BlogPostDetailView,
@@ -18,5 +18,4 @@ urlpatterns = [
     path('<int:pk>/delete/', BlogPostDeleteView.as_view(), name='delete_blog_post'),
     path('comment/create/<int:pk>/', comment_create, name='comment_create'),
     path('comment/delete/<int:pk>/', comment_delete, name='comment_delete'),
-    path('froala_editor/',include('froala_editor.urls'))
-]
+] 
