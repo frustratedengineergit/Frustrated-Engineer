@@ -1,5 +1,5 @@
 from django.db import models
-from markdownx.models import MarkdownxField
+from froala_editor.fields import FroalaField
 from django.contrib.auth.models import User
 
 
@@ -19,7 +19,7 @@ class Tag(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
-    content = MarkdownxField()
+    content = FroalaField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Category)

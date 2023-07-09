@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     "Email_Notice_App",
     "authentication",
     "blogs",
-    'markdownx',
+    'froala_editor',
     'dashboard',
     'friends',
     'chat',
@@ -237,3 +237,7 @@ CHANNEL_LAYERS = {
 CHANNELS_ROUTING = 'routing.websocket_urlpatterns'
 
 CSRF_TRUSTED_ORIGINS = ['https://frustrated-engineer.onrender.com']
+
+FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')
+
+FROALA_EDITOR_THEME = 'dark'

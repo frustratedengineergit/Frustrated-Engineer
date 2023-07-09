@@ -3,6 +3,7 @@
 {% block title %}Update Blog Post - Frustrated Engineers{% endblock title %}
 
 {% block dashboardstyles %}
+{{ form.media }}
 <style>
   .form-group {
     margin-bottom: 20px;
@@ -86,6 +87,19 @@
     background-color: transparent !important;
     color: white !important;
   }
+  /* Froala CSS to match the Theme */
+  .fr-wrapper{
+    background-color: transparent!important;
+  }
+  .fr-box.fr-basic .fr-element{
+    color: white!important;
+  }
+  #fr-logo{
+    display:none;
+  }
+  .fr-toolbar,.fr-second-toolbar{
+    background-color: transparent!important;
+  }
 </style>
 {% endblock dashboardstyles %}
 
@@ -101,7 +115,7 @@
 
   <div class="form-group">
     <label for="id_content">Content:</label>
-    <textarea id="id_content" name="content" required>{{ post.content }}</textarea>
+    {{ form.content }}
   </div>
 
   <div class="form-group-file">

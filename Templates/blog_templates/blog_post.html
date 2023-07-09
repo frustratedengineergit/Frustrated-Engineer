@@ -121,7 +121,7 @@
             {% endif %}
             <br>
             <br>
-            <p>{{ post.content|truncatewords:20 }}</p>
+            <p>{{ post.content|truncatewords:20 |safe }}</p>
             <br>
             <br>
             <p><b>Author:</b> {{ post.author.username }}</p><br>

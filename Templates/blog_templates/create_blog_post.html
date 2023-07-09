@@ -1,6 +1,6 @@
 {% extends 'dashboard_base.html' %} {% block title %}Create Blog Post -
 Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
-
+{{form.media}}
 <style>
   .form-group {
     margin-bottom: 20px;
@@ -81,6 +81,19 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
     background-color:transparent!important;
     color: white!important;
   }
+  /* Froala CSS to match the Theme */
+  .fr-wrapper{
+    background-color: transparent!important;
+  }
+  .fr-box.fr-basic .fr-element{
+    color: white!important;
+  }
+  #fr-logo{
+    display:none;
+  }
+  .fr-toolbar,.fr-second-toolbar{
+    background-color: transparent!important;
+  }
 </style>
 
 {% endblock dashboardstyles %} {% block dashboardbody %}
@@ -96,7 +109,7 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
 
   <div class="form-group">
     <label for="id_content">Content:</label>
-    <textarea id="id_content" name="content" required></textarea>
+    {{ form.content }}
   </div>
 
   <div class="form-group-file">
@@ -126,6 +139,9 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
   <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 {% endblock dashboardbody %} {% block dashjs %}
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+
+<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
 <script>
   // dashjs code to display the selected image filename
   const fileInput = document.getElementById("id_image");

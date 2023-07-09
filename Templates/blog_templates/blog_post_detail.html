@@ -79,10 +79,6 @@
     border-radius: 8px;
   }
 
-  .blog-pads p {
-    text-align: left !important;
-  }
-
   .form-group textarea {
     background-color: transparent;
     color: white;
@@ -143,6 +139,7 @@
   .del-btn:hover {
     background-color: #D730E9;
   }
+  
 </style>
 {% endblock dashboardstyles %}
 
@@ -157,7 +154,7 @@
         <img src="{{ image_url }}" alt="Blog Post Image">
       </div>
       {% endif %}
-      <p>{{ post.content }}</p>
+      <p>{{ post.content |safe }}</p>
       <br>
       <p><b>Author: </b>{{ post.author.username }}</p>
       <p><b>Categories:</b><br>

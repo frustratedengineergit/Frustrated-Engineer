@@ -8,11 +8,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator
-from markdownx.widgets import MarkdownxWidget
-import firebase_admin
-from firebase_admin import credentials
+from froala_editor.widgets import FroalaEditor
 from firebase_admin import storage
-from dashboard.views import dashboard
+
+
 
 @login_required
 def blog_posts(request):
@@ -22,13 +21,14 @@ def blog_posts(request):
     page_obj = paginator.get_page(page_number)
     return render(request, 'blog_templates/blog_post.html', {'page_obj': page_obj})
 
+
 class BlogPostForm(forms.ModelForm):
+    content = forms.CharField(widget=FroalaEditor)
     class Meta:
         model = BlogPost
         fields = ['title', 'content', 'categories', 'tags']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': MarkdownxWidget(attrs={'class': 'form-control'}),
             'categories': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
@@ -37,6 +37,7 @@ class BlogPostForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['categories'].queryset = Category.objects.all()
         self.fields['tags'].queryset = Tag.objects.all()
+
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
@@ -96,7 +97,7 @@ class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
                 except Exception as e:
                     # Handle the exception as per your requirement
                     pass
-                
+
             # Upload the new image
             filename = f"blogimages/{image_file.name}"
             blob = bucket.blob(filename)
@@ -111,6 +112,7 @@ class BlogPostUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
+
 class BlogPostDetailView(DetailView):
     model = BlogPost
     template_name = 'blog_templates/blog_post_detail.html'
@@ -122,6 +124,7 @@ class BlogPostDetailView(DetailView):
         context['image_url'] = post.image_url if post.image_url else None
         context['comments'] = post.comments.all()
         return context
+
 
 class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogPost
@@ -179,6 +182,6 @@ def comment_delete(request, pk):
     # Check if the authenticated user is the author of the comment
     if comment.author == request.user:
         comment.delete()
-    
+
     # Redirect to the appropriate page
     return redirect('blog_post_detail', pk=comment.post.pk)
