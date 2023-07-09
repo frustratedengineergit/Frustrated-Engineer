@@ -149,6 +149,14 @@
 
 {% block dashjs %}
 <script>
+  window.addEventListener('DOMContentLoaded', function() {
+    var divElement = document.querySelector('div[style="z-index:9999;width:100%;position:relative"]');
+    if (divElement) {
+      divElement.style.display = 'none';
+    }
+  });
+</script>
+<script>
   // Javascript code to display the selected image filename
   const fileInput = document.getElementById("id_image");
   const filenameContainer = document.querySelector(".filename");
