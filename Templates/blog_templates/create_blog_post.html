@@ -94,6 +94,15 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
   .fr-toolbar,.fr-second-toolbar{
     background-color: transparent!important;
   }
+  .hideFroala{
+    padding: 0!important;
+    color: transparent!important;
+    text-decoration: none;
+    background: transparent!important;
+    display: block;
+    font-size: 1px!important;
+    font-family: sans-serif;
+}
 </style>
 
 {% endblock dashboardstyles %} {% block dashboardbody %}
@@ -139,14 +148,14 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
   <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 {% endblock dashboardbody %} {% block dashjs %}
+
 <script>
-  window.addEventListener('DOMContentLoaded', function() {
-    var divElement = document.querySelector('div[style="z-index:9999;width:100%;position:relative"]');
-    if (divElement) {
-      divElement.style.display = 'none';
+  var aElement = document.querySelector('a[href="https://www.froala.com/wysiwyg-editor?k=u"]');
+    if (aElement) {
+      aElement.classList.add('hideFroala');
     }
-  });
-</script>
+
+  </script>
 <script>
   // dashjs code to display the selected image filename
   const fileInput = document.getElementById("id_image");
