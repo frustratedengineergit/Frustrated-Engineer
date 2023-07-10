@@ -147,6 +147,11 @@ class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
 
 # Authentication views
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -154,11 +159,15 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return JsonResponse({'success': True, 'redirect_url': '/dashboard/'})
         else:
-            messages.error(request, 'Invalid username or password.')
-    return render(request, 'login.html')
+            try:
+                user = User.objects.get(username=username)
+                return JsonResponse({'success': False, 'error_message': 'Invalid password.'})
+            except User.DoesNotExist:
+                return JsonResponse({'success': False, 'error_message': 'Invalid username.'})
 
+    return render(request, 'login.html')
 
 @login_required
 def logout_view(request):

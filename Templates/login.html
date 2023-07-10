@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}Blogs - Frustrated Engineers{% endblock title %}
-    
+
 {% load static %}
-    
+
 {% block styles %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css"
   integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <style>
-
-  .main{
+  .main {
     margin: auto;
     width: 700px;
     height: 450px;
@@ -19,27 +18,30 @@
     background: #321772;
     border-radius: 10px;
   }
-  #chk{
+
+  #chk {
     display: none;
   }
-  .call-text{
+
+  .call-text {
     position: relative;
     width: 100%;
     height: 100%;
   }
-  
-  h1{
+
+  h1 {
     margin-top: 60px;
     text-align: center;
     color: #fff;
     font-size: 1.8rem;
   }
 
-  h2{
+  h2 {
     text-align: center;
     margin: 5px auto;
   }
-  label{
+
+  label {
     color: #fff;
     font-size: 2.3em;
     justify-content: center;
@@ -49,7 +51,8 @@
     cursor: pointer;
     transition: .5s ease-in-out;
   }
-  input{
+
+  input {
     width: 60%;
     height: 40px;
     background: #e0dede;
@@ -61,7 +64,8 @@
     outline: none;
     border-radius: 5px;
   }
-  .signup-btn{
+
+  .signup-btn {
     width: 20%;
     height: 40px;
     margin: 10px auto;
@@ -78,10 +82,12 @@
     transition: .2s ease-in;
     cursor: pointer;
   }
-  .signup-btn:hover{
+
+  .signup-btn:hover {
     background: #4568dc;
   }
-  .login-btn{
+
+  .login-btn {
     width: 20%;
     height: 40px;
     margin: 10px auto;
@@ -98,42 +104,55 @@
     transition: .2s ease-in;
     cursor: pointer;
   }
-  .login-btn:hover{
+
+  .login-btn:hover {
     background: #e427ea;
   }
-  .login-text a{
+
+  .login-text a {
     justify-content: space-evenly;
     display: flex;
     margin: 20px auto;
     text-decoration: none;
     color: #321772;
   }
-  .login-text a:hover{
+
+  .login-text a:hover {
     text-decoration: underline;
   }
-  .login-text{
+
+  .login-text {
     height: 550px;
     background: #fff;
     border-radius: 50% / 10%;
     transform: translateY(-180px);
     transition: .8s ease-in-out;
   }
-  .login-text label{
+
+  .login-text label {
     color: #321772;
     transform: scale(.6);
   }
-  #chk:checked ~ .login-text{
+
+  #chk:checked~.login-text {
     transform: translateY(-550px);
   }
-  #chk:checked ~ .login-text label{
+
+  #chk:checked~.login-text label {
     transform: scale(1);
   }
-  #chk:checked ~ .call-text label{
+
+  #chk:checked~.call-text label {
     transform: scale(.6);
   }
 
   .clean-block {
     background: radial-gradient(ellipse at bottom, #192E47 0%, #030617 100%);
+  }
+  .error-message{
+    text-align: center;
+    color: red;
+    font-weight: 600;
   }
 </style>
 {% endblock styles %}
@@ -145,26 +164,27 @@
     <div class="main">
       <input type="checkbox" id="chk" aria-hidden="true">
       <div class="call-text">
-          
-            
-              <h1>Don't have a account yet?</h1>
-              <button class="signup-btn" onclick="window.location.href='/authentication/signup'">Join Us Here</button>
-              <h1>OR</h1>
-              <h1>Touch the <i class="fas fa-chevron-up"></i> <span>Button</span> to Login </h1>
-            
-        </div>
-        <div class="login-text">
-            <form method="post">
-              {% csrf_token %}
 
-                <label for="chk" aria-hidden="true" class="cta"><i class="fas fa-chevron-up"></i></label>
-                <h2 class="description">Login</h2>
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <a href="#">Forgot Password?</a>
-                <button class="login-btn" type="submit">Log In</button>
-            </form>
-        </div>
+
+        <h1>Don't have a account yet?</h1>
+        <button class="signup-btn" onclick="window.location.href='/authentication/signup'">Join Us Here</button>
+        <h1>OR</h1>
+        <h1>Touch the <i class="fas fa-chevron-up"></i> <span>Button</span> to Login </h1>
+
+      </div>
+      <div class="login-text">
+        <form id="login-form" method="post">
+          {% csrf_token %}
+          <label for="chk" aria-hidden="true" class="cta"><i style="transition: transform 0.5s ease-in-out;"
+              class="fas fa-chevron-up"></i></label>
+          <h2 class="description">Login</h2>
+          <div id="error-message" class="error-message"></div>
+          <input type="text" id="username" name="username" placeholder="Username" required>
+          <input type="password" id="password" name="password" placeholder="Password" required>
+          <a href="#">Forgot Password?</a>
+          <button class="login-btn" type="submit">Log In</button>
+        </form>
+      </div>
     </div>
   </section>
 </main>
@@ -172,23 +192,44 @@
 
 
 {% block javascript %}
-<script>
-  var cta = document.querySelector(".cta");
-  var check = 0;
 
-  cta.addEventListener('click', function (e) {
-    var text = e.target.nextElementSibling;
-    var loginText = e.target.parentElement;
-    text.classList.toggle('show-hide');
-    loginText.classList.toggle('expand');
-    if (check == 0) {
-      cta.innerHTML = "<i class=\"fas fa-chevron-down\"></i>";
-      check++;
-    }
-    else {
-      cta.innerHTML = "<i class=\"fas fa-chevron-up\"></i>";
-      check = 0;
-    }
-  })
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var cta = document.querySelector(".cta");
+    var chevronIcon = cta.querySelector("i");
+    var rotationDegree = 0;
+
+    cta.addEventListener('click', function () {
+      rotationDegree += 180;
+      chevronIcon.style.transform = "rotate(" + rotationDegree + "deg)";
+    });
+  });
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("login-form");
+    var errorMessage = document.getElementById("error-message");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var formData = new FormData(form);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "{% url 'login' %}", true);
+      xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          if (response.success) {
+            window.location.href = response.redirect_url;
+          } else {
+            errorMessage.textContent = response.error_message;
+          }
+        }
+      };
+      xhr.send(formData);
+    });
+  });
+</script>
+
 {% endblock javascript %}
