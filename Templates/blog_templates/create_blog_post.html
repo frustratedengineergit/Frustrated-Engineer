@@ -1,6 +1,7 @@
-{% extends 'dashboard_base.html' %} {% block title %}Create Blog Post -
-Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
-{{form.media}}
+{% extends 'dashboard_base.html' %} 
+{% block title %}Create Blog Post - Frustrated Engineers{% endblock title %} 
+{% block dashboardstyles %}
+{{ form.media }}
 <style>
   .form-group {
     margin-bottom: 20px;
@@ -22,9 +23,11 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
     font-size: 16px;
     box-sizing: border-box;
   }
-  textarea{
-    height:200px;
+
+  textarea {
+    height: 200px;
   }
+
   select[multiple] {
     height: auto;
   }
@@ -74,39 +77,52 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
     font-size: 14px;
     color: #d730e9;
   }
+
   .form-group input[type="text"],
   .form-group-file input[type="file"],
   .form-group select,
-  .form-group textarea{
-    background-color:transparent!important;
-    color: white!important;
+  .form-group textarea {
+    background-color: transparent !important;
+    color: white !important;
   }
+
   /* Froala CSS to match the Theme */
-  .fr-wrapper{
-    background-color: transparent!important;
+  .fr-wrapper {
+    background-color: transparent !important;
   }
-  .fr-box.fr-basic .fr-element{
-    color: white!important;
+
+  .fr-box.fr-basic .fr-element {
+    color: white !important;
   }
-  #fr-logo{
-    display:none;
+
+  #fr-logo {
+    display: none;
   }
-  .fr-toolbar,.fr-second-toolbar{
-    background-color: transparent!important;
+
+  .fr-toolbar,
+  .fr-second-toolbar {
+    background-color: transparent !important;
   }
-  .hideFroala{
-    padding: 0!important;
-    color: transparent!important;
+
+  .hideFroala {
+    padding: 0 !important;
+    color: transparent !important;
     text-decoration: none;
-    background: transparent!important;
+    background: transparent !important;
     display: block;
-    font-size: 1px!important;
+    font-size: 1px !important;
     font-family: sans-serif;
-}
+  }
+
+  #colorFields,
+  #imageFields,
+  #customCssFields {
+    display: none;
+  }
 </style>
+{% endblock dashboardstyles %}
 
-{% endblock dashboardstyles %} {% block dashboardbody %}
-
+{% block dashboardbody %}
 <h2>Create Blog Post</h2>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
@@ -123,8 +139,41 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
 
   <div class="form-group-file">
     <label for="id_image">Image:</label>
-    <input type="file" id="id_image" name="image" class="form-control-file form-control"/>
+    <input type="file" id="id_image" name="image" class="form-control-file form-control" />
     <span class="filename"></span>
+  </div>
+
+  <div id="backgroundFields">
+    <div class="form-group">
+      <label for="id_background_choice">Blog's Background:</label>
+      <select id="id_background_choice" name="background_choice" required>
+        <option value="default">Default</option>
+        <option value="color">Color</option>
+        <option value="image">Image</option>
+        <option value="custom_css">Custom CSS</option>
+      </select>
+    </div>
+
+    <div id="colorFields" style="display: none;">
+      <div class="form-group">
+        <label for="id_background_color">Choose a Background Color:</label>
+        <input type="color" id="id_background_color" name="background_color" />
+      </div>
+    </div>
+
+    <div id="imageFields" style="display: none;">
+      <div class="form-group">
+        <label for="id_background_image">Give Background Image Link:</label>
+        <input type="text" id="id_background_image" name="background_image_link" class="form-control" />
+      </div>
+    </div>
+
+    <div id="customCssFields" style="display: none;">
+      <div class="form-group">
+        <label for="id_custom_css">Apply Custom CSS:</label>
+        <textarea id="id_custom_css" name="custom_css"></textarea>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
@@ -147,17 +196,31 @@ Frustrated Engineers{% endblock title %} {% block dashboardstyles %}
 
   <button class="btn btn-primary" type="submit">Submit</button>
 </form>
-{% endblock dashboardbody %} {% block dashjs %}
+{% endblock dashboardbody %}
 
+{% block dashjs %}
 <script>
   var aElement = document.querySelector('a[href="https://www.froala.com/wysiwyg-editor?k=u"]');
     if (aElement) {
       aElement.classList.add('hideFroala');
     }
 
-  </script>
+</script>
 <script>
-  // dashjs code to display the selected image filename
+  const backgroundChoice = document.getElementById("id_background_choice");
+  const backgroundFields = document.getElementById("backgroundFields");
+  const colorFields = document.getElementById("colorFields");
+  const imageFields = document.getElementById("imageFields");
+  const customCssFields = document.getElementById("customCssFields");
+
+  backgroundChoice.addEventListener("change", () => {
+    const selectedOption = backgroundChoice.value;
+    colorFields.style.display = selectedOption === "color" ? "block" : "none";
+    imageFields.style.display = selectedOption === "image" ? "block" : "none";
+    customCssFields.style.display = selectedOption === "custom_css" ? "block" : "none";
+  });
+
+  // Code to display the selected image filename
   const fileInput = document.getElementById("id_image");
   const filenameContainer = document.querySelector(".filename");
 

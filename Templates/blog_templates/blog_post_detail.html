@@ -75,8 +75,10 @@
   }
 
   .blog-pads {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color:rgba(255, 255, 255, 0.2);
+    {{ background_style }}!important; 
     border-radius: 8px;
+    color: {{ text_color }};
   }
 
   .form-group textarea {
@@ -93,19 +95,19 @@
   .update-button {
     padding: 10px;
     background-color: transparent;
-    border: white solid 1px;
+    border: {{ text_color }} solid 1px;
     border-radius: 8px;
     text-decoration: none;
-    color: white;
+    color: {{ text_color }};
   }
 
   .delete-button {
     padding: 10px;
     background-color: transparent;
-    border: white solid 1px;
+    border: {{ text_color }} solid 1px;
     border-radius: 8px;
     text-decoration: none;
-    color: white;
+    color: {{ text_color }};
   }
 
   .update-button:hover {
@@ -131,6 +133,9 @@
   .commentbody {
     width: 85%;
   }
+  .commentbody p{
+    text-align:left!important;
+  }
 
   .commentbutton {
     width: 15%;
@@ -139,6 +144,7 @@
   .del-btn:hover {
     background-color: #D730E9;
   }
+
   
 </style>
 {% endblock dashboardstyles %}
@@ -148,6 +154,7 @@
 <section class="blog-pads">
   <div class="container">
     <div class="block-content">
+      <div class="innerpost">
       <h2 style="text-align:center!important;">{{ post.title }}</h2>
       {% if image_url %}
       <div class="post-image">
@@ -156,17 +163,19 @@
       {% endif %}
       <p>{{ post.content |safe }}</p>
       <br>
-      <p><b>Author: </b>{{ post.author.username }}</p>
-      <p><b>Categories:</b><br>
+      <p><b>Author: </b> <a href="/dashboard/users/profile/{{post.author.pk}}" style='font-size:20px;font-style:italic;text-decoration: none;color: {{ text_color }};'>{{ post.author.username }}</a> </p><br>
+      <p><b>Categories:</b><br><br>
         {% for category in post.categories.all %}
-        {{ category.name }},
+          <button type="button" onclick="window.location.href='/dashboard/blog/category/{{ category.id }}/'" class="update-button">{{ category.name }}</button>
         {% endfor %}
-      </p>
-      <p><b>Tags:</b><br>
+      </p><br>
+      
+      <p><b>Tags:</b><br><br>
         {% for tag in post.tags.all %}
-        {{ tag.name }},
+          <button type="button" class="update-button">{{ tag.name }}</button>
         {% endfor %}
       </p>
+      
       <div class="up-dl-btns">
         {% if post.author == request.user %}
         <a href="update/" class="update-button">Update Blog Post</a>

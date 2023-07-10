@@ -76,8 +76,8 @@
     }
 
     .block-content {
-        padding:0 !important;
-        background-color: transparent !important;
+        padding: 5% !important;
+        background-color: transparent!important;
     }
 
     #post-image {
@@ -86,7 +86,6 @@
         margin: 6%;
         height: 250px;
     }
-
     .posts {
         display: flex;
         flex-direction: row;
@@ -102,19 +101,17 @@
         width:300px;
         height:800px;
     }
-
-    .post a {
+    .post a{
         text-decoration: none;
         color: white;
         font-weight: 600;
     }
 
-    .contentdashboard h5 {
-        text-align: center !important;
+    .contentdashboard h5{
+        text-align: center!important;
         margin-top: 25px;
     }
-
-    .innerpost {
+    .innerpost{
         margin: 25px;
     }
 </style>
@@ -128,29 +125,26 @@
         {% for post in page_obj %}
         <article class="post">
             <div class="innerpost">
-                <h5><a href="{% url 'blog_post_detail' post.pk %}">{{ post.title }}</a></h5>
-                {% if post.image_url %}
-                <img id="post-image" src="{{ post.image_url }}" alt="Blog Post Image">
-                {% endif %}
-                <br>
-                <br>
-                <p>{{ post.content|truncatewords:20 |safe }}</p>
-                <br>
-                <br>
-                <p><b>Author:</b> {{ post.author.username }}</p><br>
-                <p><b>Categories:</b><br>
-                    {% for category in post.categories.all %}
-                    {{ category.name }}
-                    {% if not forloop.last %},{% endif %}
-                    {% endfor %}
-                </p><br>
-                <p><b>Tags:</b><br>
-                    {% for tag in post.tags.all %}
-                    {{ tag.name }}
-                    {% if not forloop.last %},{% endif %}
-                    {% endfor %}
-                </p>
-            </div>
+            <h5><a href="{% url 'blog_post_detail' post.pk %}">{{ post.title }}</a></h5>
+            {% if post.image_url %}
+            <img id="post-image" src="{{ post.image_url }}" alt="Blog Post Image">
+            {% endif %}
+            <p>{{ post.content|truncatewords:18 |safe }}</p>
+            <br>
+            <p><b>Author:</b> {{ post.author.username }}</p><br>
+            <p><b>Categories:</b><br>
+                {% for category in post.categories.all %}
+                {{ category.name }}
+                {% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </p>
+            <p><b>Tags:</b><br>
+                {% for tag in post.tags.all %}
+                {{ tag.name }}
+                {% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </p> 
+        </div>
         </article>
         {% endfor %}
         <br>

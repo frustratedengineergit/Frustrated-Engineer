@@ -10,8 +10,8 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from froala_editor.widgets import FroalaEditor
 from firebase_admin import storage
-
-
+from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 @login_required
 def blog_posts(request):
@@ -26,7 +26,7 @@ class BlogPostForm(forms.ModelForm):
     content = forms.CharField(widget=FroalaEditor)
     class Meta:
         model = BlogPost
-        fields = ['title', 'content', 'categories', 'tags']
+        fields = ['title', 'content', 'categories', 'tags', 'background_choice', 'background_color', 'background_image_link', 'custom_css']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'categories': forms.SelectMultiple(attrs={'class': 'form-control'}),
@@ -123,8 +123,47 @@ class BlogPostDetailView(DetailView):
         post = self.object
         context['image_url'] = post.image_url if post.image_url else None
         context['comments'] = post.comments.all()
-        return context
 
+        # Background Selection
+        background = post.background_choice
+        background_color = post.background_color
+        background_image = post.background_image_link
+        custom_css = post.custom_css
+
+        if background == 'color':
+            context['background_style'] = f"background: {background_color};"
+            # Adjust text color based on background color brightness
+            context['text_color'] = '#fff' if self.is_dark_color(background_color) else '#333'
+        elif background == 'image':
+            context['background_style'] = f"background: url('{background_image}');"
+            context['text_color'] = '#fff' if self.is_dark_color(background_color) else '#333'
+        elif background == 'custom_css':
+            context['background_style'] = custom_css
+            context['text_color'] = '#fff'  # Set default text color for custom CSS
+        else:
+            context['background_style'] = ''
+            context['text_color'] = '#fff'  # Set default text color for no background
+
+        # Remove the specific line from the content
+        post.content = post.content.replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '')
+        post.save()
+
+        return context
+    
+    @staticmethod
+    def is_dark_color(color):
+        """
+        Check if the given color is dark based on its brightness.
+        Assumes the color is a valid hexadecimal color string.
+        """
+        # Remove '#' if present
+        color = color.replace('#', '')
+        # Convert to RGB values
+        r, g, b = int(color[:2], 16), int(color[2:4], 16), int(color[4:], 16)
+        # Calculate brightness using ITU-R BT.709 coefficients
+        brightness = (r * 299 + g * 587 + b * 114) / 1000
+        # Return True if brightness is less than or equal to 127 (considered dark)
+        return brightness <= 127
 
 class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogPost
@@ -146,11 +185,6 @@ class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # Authentication views
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
-from django.contrib.auth.models import User
 
 def login_view(request):
     if request.method == 'POST':
@@ -194,3 +228,18 @@ def comment_delete(request, pk):
 
     # Redirect to the appropriate page
     return redirect('blog_post_detail', pk=comment.post.pk)
+
+@login_required
+def blogs_by_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    blogs = BlogPost.objects.filter(categories=category)
+
+    paginator = Paginator(blogs, 10)  # Change the number based on your desired page size
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'category': category,
+        'page_obj': page_obj,
+    }
+    return render(request, 'blog_templates/blogs_by_category.html', context)

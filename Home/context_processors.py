@@ -16,6 +16,10 @@ def active_directory(request):
         active_directory = 'About Us'
     elif current_url == 'ContactUs':
         active_directory = 'Contact Us'
+    elif current_url == 'dashboard':
+        active_directory = 'Feians'
+    elif current_url == 'login':
+        active_directory = 'Feians'
     
 
     return {'active_directory': active_directory}
