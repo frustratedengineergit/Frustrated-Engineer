@@ -14,3 +14,4 @@ redis==4.6.0
 asgiref==3.7.2
 daphne
 django-froala-editor
+requests>=2.32.0 # not directly required, pinned by Snyk to avoid a vulnerability
